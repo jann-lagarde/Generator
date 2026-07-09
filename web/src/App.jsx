@@ -7,7 +7,10 @@ import Preview from './Preview'
 const TEMPLATES = [
   { id: 'lending', name: 'Lending Pro', description: 'Micro-lending focused, includes loan calculator (required)', thumbnail: '/templates/lending/thumbnail.svg', path: '/templates/lending/index.html', niche: 'Lending' },
   { id: 'travel', name: 'Travel Luxe', description: 'Travel agency template with itineraries (required)', thumbnail: '/templates/travel/thumbnail.svg', path: '/templates/travel/index.html', niche: 'Travel' },
-  { id: 'cosmetics', name: 'Cosmetics Lab', description: 'Product-first design for manufacturers', thumbnail: '/templates/cosmetics/thumbnail.svg', path: '/templates/cosmetics/index.html', niche: 'Cosmetics' }
+  { id: 'cosmetics', name: 'Cosmetics Lab', description: 'Product-first design for manufacturers', thumbnail: '/templates/cosmetics/thumbnail.svg', path: '/templates/cosmetics/index.html', niche: 'Cosmetics' },
+  { id: 'saas', name: 'SaaS Pro', description: 'Premium product landing with features & pricing', thumbnail: '/templates/saas/thumbnail.svg', path: '/templates/saas/index.html', niche: 'SaaS' },
+  { id: 'restaurant', name: 'Dining Elegant', description: 'Restaurant template with menu and reservations', thumbnail: '/templates/restaurant/thumbnail.svg', path: '/templates/restaurant/index.html', niche: 'Restaurant' },
+  { id: 'portfolio', name: 'Creative Portfolio', description: 'Portfolio grid for agencies and creators', thumbnail: '/templates/portfolio/thumbnail.svg', path: '/templates/portfolio/index.html', niche: 'Portfolio' }
 ]
 
 const NICHE_FIELDS = {
@@ -26,6 +29,24 @@ const NICHE_FIELDS = {
     { name: 'siteTitle', label: 'Site title', required: true },
     { name: 'tagline', label: 'Tagline', required: false },
     { name: 'products', label: 'Products (HTML)', type: 'textarea', placeholder: '<div class="card">Product A</div>', required: true }
+  ],
+  SaaS: [
+    { name: 'siteTitle', label: 'Site title', required: true },
+    { name: 'tagline', label: 'Tagline', required: false },
+    { name: 'features', label: 'Features (HTML)', type: 'textarea', placeholder: '<div class="card">Feature A</div>', required: true },
+    { name: 'pricing', label: 'Pricing (HTML)', type: 'textarea', placeholder: '<div class="plan">Free</div>', required: true }
+  ],
+  Restaurant: [
+    { name: 'siteTitle', label: 'Site title', required: true },
+    { name: 'tagline', label: 'Tagline', required: false },
+    { name: 'menu', label: 'Menu (HTML)', type: 'textarea', placeholder: '<div class="dish">Dish — $12</div>', required: true },
+    { name: 'booking', label: 'Booking instructions', required: false }
+  ],
+  Portfolio: [
+    { name: 'siteTitle', label: 'Site title', required: true },
+    { name: 'tagline', label: 'Tagline', required: false },
+    { name: 'projects', label: 'Projects (HTML)', type: 'textarea', placeholder: '<div class="proj"><img src="..." alt=""/></div>', required: true },
+    { name: 'contact', label: 'Contact details', required: false }
   ]
 }
 
@@ -60,6 +81,11 @@ function App(){
     html = html.replace(/%%ITINERARIES%%/g, data.itineraries || '<p>No itineraries provided</p>')
     html = html.replace(/%%CONTACT%%/g, escapeHtml(data.contact || ''))
     html = html.replace(/%%PRODUCTS%%/g, data.products || '<div>No products yet</div>')
+    html = html.replace(/%%FEATURES%%/g, data.features || '<div class="card">Feature A</div>')
+    html = html.replace(/%%PRICING%%/g, data.pricing || '<div class="plan">Free</div>')
+    html = html.replace(/%%MENU%%/g, data.menu || '<div class="dish">Sample Dish — $12</div>')
+    html = html.replace(/%%BOOKING%%/g, escapeHtml(data.booking || ''))
+    html = html.replace(/%%PROJECTS%%/g, data.projects || '<div class="proj"><img src="https://via.placeholder.com/320x160" alt=""/></div>')
 
     setSrcDoc(html)
   }
