@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>%%SITE_TITLE%% — Lending</title>
+  <style>
+    body{font-family:system-ui,Arial;background:#f7f7fb;color:#111;margin:0;padding:28px}
+    .wrap{max-width:980px;margin:0 auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 10px 30px rgba(16,24,40,0.06)}
+    h1{margin:0 0 8px}
+    .calc{display:flex;gap:12px;align-items:center;margin-top:18px}
+    input{padding:10px;border-radius:8px;border:1px solid #e6e6ef}
+    .result{margin-top:12px;padding:12px;background:#f1f7ff;border-radius:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>%%SITE_TITLE%%</h1>
+    <p>%%TAGLINE%%</p>
+
+    <h3>Loan Calculator</h3>
+    <div class="calc">
+      <div>
+        <div>Amount</div>
+        <input id="amount" type="number" value="10000" />
+      </div>
+      <div>
+        <div>Term (months)</div>
+        <input id="term" type="number" value="12" />
+      </div>
+      <div>
+        <div>APR (%)</div>
+        <input id="apr" type="number" step="0.01" value="5.5" />
+      </div>
+      <button id="calc">Calculate</button>
+    </div>
+    <div id="res" class="result" aria-live="polite">Monthly payment will appear here.</div>
+
+    <hr style="margin:20px 0"/>
+    <h3>About Us</h3>
+    <div>%%DESCRIPTION%%</div>
+  </div>
+
+  <script>
+    function calc() {
+      const A = parseFloat(document.getElementById('amount').value) || 0;
+      const n = parseFloat(document.getElementById('term').value) || 1;
+      const apr = parseFloat(document.getElementById('apr').value) || 0;
+      const r = apr/100/12;
+      const payment = r===0 ? (A/n) : (A*r/ (1 - Math.pow(1+r, -n)));
+      document.getElementById('res').textContent = 'Monthly: ' + payment.toFixed(2);
+    }
+    document.getElementById('calc').addEventListener('click',calc);
+    calc();
+  </script>
+</body>
+</html>

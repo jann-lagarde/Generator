@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= companyName ?> | Compounding Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { primary: '<?= primaryColor ?>', secondary: '<?= secondaryColor ?>' } } }
+        }
+    </script>
+</head>
+<body class="bg-neutral-50 text-neutral-800 antialiased font-sans">
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="<?= logoUrl ?>" class="h-10 w-auto object-contain">
+                <span class="font-bold text-lg tracking-wider uppercase text-neutral-900"><?= companyName ?></span>
+            </div>
+            <a href="#intake" class="px-5 py-2 bg-neutral-900 text-white rounded-full text-xs font-bold uppercase tracking-wider">Request Lab Catalog</a>
+        </div>
+    </nav>
+
+    <section class="pt-36 pb-24 bg-gradient-to-b from-neutral-100 to-neutral-50 border-b border-neutral-200">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-light tracking-tight text-neutral-900 mb-6"><?= heroTitle ?></h1>
+            <p class="text-lg text-neutral-500 max-w-xl mx-auto font-light mb-8"><?= heroSubtitle ?></p>
+            <div class="inline-block px-4 py-1.5 border border-primary text-primary rounded-full text-xs uppercase tracking-widest font-semibold"><?= nature ?></div>
+        </div>
+    </section>
+
+    <!-- Unique Dynamic: Product Catalog Grid Showroom -->
+    <section class="py-24 max-w-7xl mx-auto px-6">
+        <h2 class="text-xs uppercase tracking-widest font-bold text-center text-neutral-400 mb-2">Available Base Formulations</h2>
+        <h3 class="text-3xl font-light text-center text-neutral-900 mb-16">Stock Matrix Formulation Options</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="space-y-4">
+                <div class="aspect-[4/5] bg-neutral-200 rounded-3xl overflow-hidden shadow-sm border border-neutral-200">
+                    <img src="<?= prod1Img ?>" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h4 class="font-medium text-lg text-neutral-900"><?= prod1Title ?></h4>
+                    <p class="text-sm text-neutral-500 font-light"><?= prod1Cap ?></p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="aspect-[4/5] bg-neutral-200 rounded-3xl overflow-hidden shadow-sm border border-neutral-200">
+                    <img src="<?= prod2Img ?>" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h4 class="font-medium text-lg text-neutral-900"><?= prod2Title ?></h4>
+                    <p class="text-sm text-neutral-500 font-light"><?= prod2Cap ?></p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="aspect-[4/5] bg-neutral-200 rounded-3xl overflow-hidden shadow-sm border border-neutral-200">
+                    <img src="<?= prod3Img ?>" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h4 class="font-medium text-lg text-neutral-900"><?= prod3Title ?></h4>
+                    <p class="text-sm text-neutral-500 font-light"><?= prod3Cap ?></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intake Operations Layout -->
+    <section id="intake" class="py-24 bg-neutral-900 text-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="border border-neutral-800 p-8 md:p-12 rounded-3xl bg-neutral-950/40">
+                <h3 class="text-3xl font-light tracking-tight mb-2 text-center">Initiate Formulative Request</h3>
+                <p class="text-neutral-500 text-sm text-center mb-10">Direct inquiries: <?= emailAddress ?> | Lab Desk: <?= contactNumber ?></p>
+                
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label class="block text-xs uppercase tracking-wider font-bold text-neutral-400 mb-2">Corporate Entity</label><input type="text" class="w-full p-3 bg-neutral-900 border border-neutral-800 rounded-xl outline-none text-white focus:border-primary"></div>
+                        <div><label class="block text-xs uppercase tracking-wider font-bold text-neutral-400 mb-2">Primary Contact Email</label><input type="email" class="w-full p-3 bg-neutral-900 border border-neutral-800 rounded-xl outline-none text-white focus:border-primary"></div>
+                    </div>
+                    <?!= funnelFields ?>
+                    <button type="button" class="w-full py-4 bg-primary text-white text-xs uppercase tracking-widest font-bold rounded-xl mt-4 hover:bg-opacity-90 transition-all">Submit Compounding Specification Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
