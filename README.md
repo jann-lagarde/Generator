@@ -1,29 +1,18 @@
-Site Generator — React + Vite (MVP)
+Site Generator (MVP)
+This frontend application is a premium static site generator designed to instantly create high-converting, tailored landing pages for prospective clients. Built using React and Vite, the platform streamlines the pitch process by turning direct questionnaire data into fully functional, downloadable web assets.
 
-This repository contains a frontend generator that creates premium-looking static sites from templates. The current MVP (in web/) includes:
+⚡ Key Features
+Template Gallery: A curated selection of premium niche templates equipped with visual previews.
 
-- React + Vite app
-- Template gallery with thumbnails
-- Questionnaire flow with required fields per niche
-- Live preview using iframe (srcDoc)
-- Client-side ZIP export (jszip + file-saver)
-- Sample templates: Lending (loan calculator), Travel (itineraries), Cosmetics (products)
+Dynamic Questionnaire Flow: Structured, niche-specific forms that capture required client data dynamically.
 
-How to run locally
+Instant Live Preview: Real-time visual rendering of the generated site using an interactive client-side iframe (srcDoc).
 
-1. cd web
-2. npm install
-3. npm run dev
+Zero-Server ZIP Export: Full local bundling and instant package deployment downloads powered entirely on the client side via jszip and file-saver.
 
-Build for production
+🎨 Included Templates
+Lending: High-conversion landing page featuring an interactive loan calculator.
 
-1. cd web
-2. npm run build
-3. Serve the contents of web/dist (Cloudflare Pages publish directory)
+Travel: Engaging, media-ready layouts designed for showcasing curated trip itineraries.
 
-Cloudflare Pages
-
-- Build command: npm run build
-- Publish directory: web/dist
-
-To deploy: push this repository to a Git provider and connect the repository in Cloudflare Pages. See cloudflare-pages.md for more details.
+Cosmetics: E-commerce focused showcases highlighting individual products and brand benefits.
