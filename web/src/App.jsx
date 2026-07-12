@@ -352,7 +352,7 @@ function App() {
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#09090b', fontFamily: 'system-ui, sans-serif' }}>
         <form onSubmit={handleLogin} style={{ background: '#14141b', padding: '40px', borderRadius: '16px', border: '1px solid #262633', width: '100%', maxWidth: '400px', textAlign: 'center' }}>
           <h2 style={{ color: '#fff', margin: '0 0 8px 0', fontSize: '1.8rem', fontWeight: 800 }}>
-            Site Engine <span style={{ color: '#f59e0b' }}>Core</span>
+            X <span style={{ color: '#f59e0b' }}>Sparks</span>
           </h2>
           <p style={{ color: '#a1a1aa', margin: '0 0 24px 0', fontSize: '0.9rem' }}>Authenticate credentials to launch the layout workspace</p>
           
@@ -406,7 +406,7 @@ function App() {
       <header style={{ marginBottom: 32, borderBottom: '1px solid #262633', paddingBottom: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h1 style={{ fontSize: '2.2rem', margin: '0 0 6px 0', color: '#fff', fontWeight: 800 }}>
-            Site Engine <span style={{ color: '#f59e0b' }}>Core-Xperts</span>
+            X-Sparks Site Engine <span style={{ color: '#f59e0b' }}>Core-Xperts</span>
           </h1>
           <p style={{ margin: 0, color: '#a1a1aa', fontSize: '0.95rem' }}>Map structural metadata variables onto reactive layout frameworks fluidly.</p>
         </div>
