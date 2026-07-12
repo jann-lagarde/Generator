@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%%SITE_TITLE%%</title>
+    
+    <!-- Fonts: Plus Jakarta Sans for a premium, geometric financial feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',       // Premium gold accent
+                            dark: '#0B0F19',       // Deep sleek background
+                            surface: '#151C2C',    // Card backgrounds
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Tweaks -->
+    <style>
+        body {
+            background-color: #0B0F19;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        /* Custom Calculator Slider Styling */
+        input[type=range] {
+            accent-color: #D4AF37;
+        }
+        /* Glassmorphism utilities */
+        .glass {
+            background: rgba(21, 28, 44, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-gold selection:text-brand-dark">
+
+    <!-- Sticky Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 py-5 px-6 lg:px-12 flex justify-between items-center transition-all duration-300 border-b border-transparent">
+        <div class="text-2xl font-bold tracking-tighter">
+            %%SITE_TITLE%%
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            <a href="#about" class="hover:text-brand-gold transition-colors">About</a>
+            <a href="#products" class="hover:text-brand-gold transition-colors">Products</a>
+            <a href="#calculator" class="hover:text-brand-gold transition-colors">Calculator</a>
+        </div>
+        <a href="#apply" class="px-6 py-2.5 bg-white text-brand-dark text-sm font-bold rounded-full hover:bg-brand-gold hover:text-white transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+            Apply Now
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center pt-20">
+        <!-- Abstract gradient orb background -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-gold/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+        
+        <div class="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="max-w-2xl gs-hero">
+                <div class="inline-block px-4 py-1.5 rounded-full border border-brand-gold/30 text-brand-gold text-xs font-semibold tracking-widest uppercase mb-6 bg-brand-gold/5">
+                    Premium Capital Solutions
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                    Elevate Your Financial Future.
+                </h1>
+                <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-lg">
+                    Access tailored lending products designed for visionaries. Transparent terms, competitive rates, and a seamless application process.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#calculator" class="px-8 py-4 bg-brand-gold text-white rounded-lg font-semibold hover:bg-white hover:text-brand-dark transition-colors">
+                        Calculate Rates
+                    </a>
+                    <a href="#about" class="px-8 py-4 bg-transparent border border-slate-600 text-white rounded-lg font-semibold hover:border-white transition-colors">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <!-- Decorative Right Side -->
+            <div class="hidden lg:block relative h-[600px] w-full rounded-3xl overflow-hidden glass gs-hero border border-brand-border">
+                <div class="absolute inset-0 bg-gradient-to-tr from-brand-dark to-transparent z-10"></div>
+                <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&q=80" alt="Financial Architecture" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative z-10">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="gs-reveal order-2 lg:order-1 relative">
+                    <div class="absolute -inset-4 bg-brand-gold/5 rounded-3xl blur-xl -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80" alt="Our Team" class="rounded-3xl w-full object-cover h-[500px] shadow-2xl">
+                </div>
+                <div class="gs-reveal order-1 lg:order-2">
+                    <h2 class="text-sm tracking-widest text-brand-gold uppercase font-bold mb-4">About the Firm</h2>
+                    <div class="text-3xl lg:text-4xl font-light leading-snug text-slate-200">
+                        %%COMPANY_DETAILS%%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loan Products Area -->
+    <section id="products" class="py-24 bg-brand-surface border-y border-brand-border">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 gs-reveal max-w-3xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Lending Portfolios</h2>
+                <p class="text-slate-400">Tailored structures to support acquisition, development, and operational scaling.</p>
+            </div>
+            <!-- React Injected Grids -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gs-reveal">
+                %%LOAN_PRODUCTS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Calculator Section -->
+    <section id="calculator" class="py-32 relative">
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
+            <div class="max-w-5xl mx-auto glass rounded-3xl p-8 md:p-14 shadow-2xl gs-reveal">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Rate & Payment Calculator</h2>
+                    <p class="text-slate-400">Estimate your monthly obligations instantly.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <!-- Controls -->
+                    <div class="lg:col-span-7 space-y-10">
+                        <div>
+                            <div class="flex justify-between mb-4">
+                                <label class="text-sm font-semibold tracking-wide text-slate-300 uppercase">Desired Capital</label>
+                                <span id="amountLabel" class="text-brand-gold font-bold text-xl">$50,000</span>
+                            </div>
+                            <input type="range" id="loanAmount" min="5000" max="1000000" step="5000" value="50000" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer border border-brand-border">
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-4">
+                                <label class="text-sm font-semibold tracking-wide text-slate-300 uppercase">Amortization Term</label>
+                                <span id="termLabel" class="text-brand-gold font-bold text-xl">36 Months</span>
+                            </div>
+                            <input type="range" id="loanTerm" min="12" max="120" step="12" value="36" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer border border-brand-border">
+                        </div>
+                        
+                        <!-- Hidden placeholder for dynamic rate passed by React Form -->
+                        <input type="hidden" id="baseRate" value="%%CALCULATOR_RATES%%">
+                    </div>
+
+                    <!-- Results Output -->
+                    <div class="lg:col-span-5 bg-brand-dark rounded-2xl p-8 md:p-10 border border-brand-border text-center shadow-inner relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-brand-gold"></div>
+                        <p class="text-sm uppercase tracking-widest text-slate-400 mb-4">Estimated Monthly Payment</p>
+                        <div class="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight" id="monthlyPayment">$0</div>
+                        
+                        <div class="inline-block px-4 py-2 rounded-lg bg-slate-800/50 border border-brand-border mb-8">
+                            <p class="text-sm text-slate-300">Base APR: <span id="rateLabel" class="text-brand-gold font-bold">%%CALCULATOR_RATES%%</span></p>
+                        </div>
+                        
+                        <a href="#apply" class="block w-full py-4 bg-white text-brand-dark font-bold rounded-lg hover:bg-brand-gold hover:text-white transition-colors duration-300">
+                            Proceed to Prequalify
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-brand-surface border-y border-brand-border">
+        <div class="container mx-auto px-6 lg:px-12 gs-reveal">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Trusted by Industry Leaders</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                %%REVIEWS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Funnel Contact Form -->
+    <section id="apply" class="py-32 relative overflow-hidden">
+        <!-- Decorative Glow -->
+        <div class="absolute right-0 bottom-0 w-[600px] h-[600px] bg-brand-gold/5 rounded-full blur-[100px] pointer-events-none"></div>
+        
+        <div class="container mx-auto px-6 max-w-3xl relative z-10 gs-reveal">
+            <div class="glass border border-brand-border rounded-3xl p-8 md:p-14">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Begin Prequalification</h2>
+                    <p class="text-slate-400">Secure. Confidential. No impact on your credit score.</p>
+                </div>
+                
+                <!-- Native Form mapping to the user's email -->
+                <form action="mailto:%%CONTACT_EMAIL%%" method="POST" enctype="text/plain" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Legal Name</label>
+                            <input type="text" name="Name" required placeholder="John Doe" class="w-full bg-brand-dark/50 border border-brand-border rounded-lg px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:border-brand-gold transition-colors">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Email Address</label>
+                            <input type="email" name="Email" required placeholder="john@company.com" class="w-full bg-brand-dark/50 border border-brand-border rounded-lg px-5 py-4 text-white placeholder-slate-600 focus:outline-none focus:border-brand-gold transition-colors">
+                        </div>
+                    </div>
+                    
+                    <!-- Funnel Qualification Fields -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Average Monthly Revenue / Income</label>
+                        <div class="relative">
+                            <select name="Income" required class="w-full bg-brand-dark/50 border border-brand-border rounded-lg px-5 py-4 text-white focus:outline-none focus:border-brand-gold transition-colors appearance-none cursor-pointer">
+                                <option value="" disabled selected>Select an income tier</option>
+                                <option value="Under $10,000">Under $10,000</option>
+                                <option value="$10,000 - $50,000">$10,000 - $50,000</option>
+                                <option value="$50,000 - $250,000">$50,000 - $250,000</option>
+                                <option value="$250,000+">$250,000+</option>
+                            </select>
+                            <!-- Custom dropdown arrow -->
+                            <div class="absolute inset-y-0 right-5 flex items-center pointer-events-none text-brand-gold">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Primary Objective</label>
+                        <div class="relative">
+                            <select name="Objective" required class="w-full bg-brand-dark/50 border border-brand-border rounded-lg px-5 py-4 text-white focus:outline-none focus:border-brand-gold transition-colors appearance-none cursor-pointer">
+                                <option value="" disabled selected>How will the capital be used?</option>
+                                <option value="Real Estate Acquisition">Real Estate Acquisition</option>
+                                <option value="Business Expansion">Business Expansion / Franchising</option>
+                                <option value="Debt Consolidation">Debt Consolidation</option>
+                                <option value="Working Capital">Working Capital & Payroll</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-5 flex items-center pointer-events-none text-brand-gold">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full py-4 bg-brand-gold text-white rounded-lg font-bold text-lg hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-[0_4px_14px_0_rgba(212,175,55,0.39)]">
+                            Submit Pre-Qualification
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-brand-border py-10">
+        <div class="container mx-auto px-6 text-center text-slate-500 text-sm">
+            %%FOOTER%%
+        </div>
+    </footer>
+
+    <!-- Interactive Logic & Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. GSAP Scroll Animations ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Navbar background transition on scroll
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('bg-brand-dark/90', 'backdrop-blur-md', 'border-brand-border', 'py-4');
+                    nav.classList.remove('py-5', 'border-transparent');
+                } else {
+                    nav.classList.add('py-5', 'border-transparent');
+                    nav.classList.remove('bg-brand-dark/90', 'backdrop-blur-md', 'border-brand-border', 'py-4');
+                }
+            });
+
+            // Hero entrance animation
+            gsap.fromTo('.gs-hero', 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: "power3.out" }
+            );
+
+            // Standard scroll reveal for sections
+            gsap.utils.toArray('.gs-reveal').forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 }, 
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 1, 
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%", // Triggers when top of element hits 85% down viewport
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+
+            // --- 2. Interactive Loan Calculator ---
+            const amountInput = document.getElementById('loanAmount');
+            const termInput = document.getElementById('loanTerm');
+            const amountLabel = document.getElementById('amountLabel');
+            const termLabel = document.getElementById('termLabel');
+            const paymentDisplay = document.getElementById('monthlyPayment');
+            
+            // Extract the base rate safely. 
+            // If React injects "5.99%", this strips the "%" and parses the float.
+            const rawRateString = document.getElementById('baseRate').value;
+            const parsedRate = parseFloat(rawRateString.replace(/[^0-9.]/g, '')) || 5.99; // Fallback to 5.99 if parsing fails
+
+            // Currency formatter
+            const formatCurrency = (num) => {
+                return new Intl.NumberFormat('en-US', { 
+                    style: 'currency', 
+                    currency: 'USD', 
+                    maximumFractionDigits: 0 
+                }).format(num);
+            };
+
+            const calculatePayment = () => {
+                const principal = parseFloat(amountInput.value);
+                const months = parseFloat(termInput.value);
+                
+                // Monthly interest rate (APR / 100 / 12)
+                const monthlyRate = (parsedRate / 100) / 12;
+
+                let monthlyPayment = 0;
+                
+                if (monthlyRate === 0) {
+                    monthlyPayment = principal / months;
+                } else {
+                    // Standard amortization formula: M = P [ i(1 + i)^n ] / [ (1 + i)^n - 1 ]
+                    monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+                }
+
+                // Update DOM labels
+                amountLabel.innerText = formatCurrency(principal);
+                termLabel.innerText = `${months} Months`;
+                paymentDisplay.innerText = formatCurrency(monthlyPayment);
+            };
+
+            // Bind Event Listeners
+            amountInput.addEventListener('input', calculatePayment);
+            termInput.addEventListener('input', calculatePayment);
+
+            // Run initial calculation on mount
+            calculatePayment();
+        });
+    </script>
+</body>
+</html>

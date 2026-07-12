@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%%SITE_TITLE%%</title>
+    
+    <!-- Fonts: Playfair Display for luxurious headings, Inter for clean, legible body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            cream: '#FAF9F6',      // Off-white luxurious background
+                            charcoal: '#1A1C19',   // Soft black for text
+                            rose: '#D2BBA0',       // Elegant muted accent (taupe/rose)
+                            stone: '#E8E6E1',      // Subtle borders/sections
+                            white: '#FFFFFF'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Tweaks -->
+    <style>
+        body {
+            background-color: #FAF9F6;
+            color: #1A1C19;
+            overflow-x: hidden;
+        }
+        
+        /* Elegant Image Reveal Utilities */
+        .reveal-image-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .reveal-image {
+            transform: scale(1.2);
+            transform-origin: center;
+        }
+        
+        /* Custom Select Arrow Styling */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-rose selection:text-brand-cream">
+
+    <!-- Sticky Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 py-6 px-6 lg:px-16 flex justify-between items-center transition-all duration-500 border-b border-transparent">
+        <div class="text-2xl font-serif font-semibold tracking-wide">
+            %%SITE_TITLE%%
+        </div>
+        <div class="hidden md:flex items-center gap-10 text-xs tracking-[0.15em] uppercase font-medium text-brand-charcoal/70">
+            <a href="#about" class="hover:text-brand-charcoal transition-colors">The Lab</a>
+            <a href="#products" class="hover:text-brand-charcoal transition-colors">Formulations</a>
+            <a href="#facilities" class="hover:text-brand-charcoal transition-colors">Facilities</a>
+        </div>
+        <a href="#inquire" class="px-7 py-3 bg-brand-charcoal text-brand-cream text-xs tracking-widest uppercase font-medium hover:bg-brand-rose transition-all duration-300">
+            Inquire
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center pt-24 pb-12">
+        <div class="container mx-auto px-6 lg:px-16 grid lg:grid-cols-12 gap-12 items-center h-full">
+            
+            <div class="lg:col-span-6 z-10 gs-hero-text">
+                <p class="text-xs tracking-[0.2em] uppercase text-brand-charcoal/60 mb-6">
+                    End-to-End Toll Manufacturing
+                </p>
+                <h1 class="font-serif text-6xl lg:text-8xl leading-[1.05] mb-8 text-brand-charcoal">
+                    Crafting <br>
+                    <span class="italic text-brand-rose">Excellence</span> <br>
+                    in Every Drop.
+                </h1>
+                <p class="text-lg text-brand-charcoal/70 mb-12 leading-relaxed max-w-md font-light">
+                    Elevating your brand with world-class cosmetic and fragrance formulations, strictly manufactured in our state-of-the-art facilities.
+                </p>
+                <a href="#inquire" class="inline-flex items-center gap-4 group">
+                    <span class="text-xs tracking-[0.15em] uppercase font-medium border-b border-brand-charcoal pb-1 group-hover:text-brand-rose group-hover:border-brand-rose transition-colors">
+                        Start Your Project
+                    </span>
+                    <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- Elegant Tall Image -->
+            <div class="lg:col-span-6 h-[70vh] lg:h-[85vh] w-full reveal-image-container">
+                <img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80" alt="Cosmetic Formulations" class="reveal-image w-full h-full object-cover">
+            </div>
+            
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-brand-white relative">
+        <div class="container mx-auto px-6 lg:px-16">
+            <div class="max-w-4xl mx-auto text-center gs-reveal">
+                <h2 class="text-xs tracking-[0.2em] uppercase text-brand-charcoal/50 mb-8">Our Heritage & Mission</h2>
+                <div class="font-serif text-3xl lg:text-5xl leading-tight text-brand-charcoal">
+                    %%COMPANY_DETAILS%%
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Laboratory & Team Facilities -->
+    <section id="facilities" class="py-32 border-t border-brand-stone bg-brand-cream">
+        <div class="container mx-auto px-6 lg:px-16">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gs-reveal">
+                <div>
+                    <h2 class="font-serif text-4xl lg:text-5xl mb-4">State of the Art Facilities</h2>
+                    <p class="text-brand-charcoal/60 font-light max-w-md">ISO-certified cleanrooms and dedicated R&D laboratories designed for absolute purity and precision.</p>
+                </div>
+            </div>
+            
+            <!-- React Injected Gallery Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 gs-stagger">
+                %%TEAM_LAB_VIEW%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Formulations Showcase -->
+    <section id="products" class="py-32 bg-brand-charcoal text-brand-cream">
+        <div class="container mx-auto px-6 lg:px-16">
+            <div class="text-center mb-20 gs-reveal">
+                <h2 class="font-serif text-4xl lg:text-6xl mb-6">Signature Formulations</h2>
+                <p class="text-brand-cream/60 font-light max-w-lg mx-auto">From bespoke fragrances to high-performance skincare, we materialize your vision into market-ready products.</p>
+            </div>
+            
+            <!-- React Injected Product Showcase -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 gs-stagger">
+                %%SAMPLE_PRODUCTS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-32 bg-brand-white border-b border-brand-stone">
+        <div class="container mx-auto px-6 lg:px-16">
+            <h2 class="text-xs tracking-[0.2em] uppercase text-brand-charcoal/50 mb-16 text-center gs-reveal">Trusted by Global Brands</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 gs-stagger">
+                %%REVIEWS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Funnel Contact Form (Manufacturing Prequalification) -->
+    <section id="inquire" class="py-32 bg-brand-cream relative">
+        <div class="container mx-auto px-6 max-w-4xl relative z-10 gs-reveal">
+            <div class="bg-brand-white border border-brand-stone p-10 md:p-16 shadow-2xl">
+                <div class="text-center mb-12">
+                    <h2 class="font-serif text-4xl mb-4">Initiate a Project</h2>
+                    <p class="text-brand-charcoal/60 font-light">Tell us about your brand's manufacturing needs to schedule a consultation with our chemists.</p>
+                </div>
+                
+                <form action="mailto:%%CONTACT_EMAIL%%" method="POST" enctype="text/plain" class="space-y-8">
+                    <!-- Standard Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-xs tracking-[0.1em] uppercase text-brand-charcoal/70 mb-2">Brand / Company Name</label>
+                            <input type="text" name="Company" required class="w-full bg-transparent border-b border-brand-stone py-3 text-brand-charcoal focus:outline-none focus:border-brand-charcoal transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs tracking-[0.1em] uppercase text-brand-charcoal/70 mb-2">Contact Email</label>
+                            <input type="email" name="Email" required class="w-full bg-transparent border-b border-brand-stone py-3 text-brand-charcoal focus:outline-none focus:border-brand-charcoal transition-colors">
+                        </div>
+                    </div>
+                    
+                    <!-- Funnel Qualification Fields -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="relative">
+                            <label class="block text-xs tracking-[0.1em] uppercase text-brand-charcoal/70 mb-2">Product Category</label>
+                            <select name="Category" required class="w-full bg-transparent border-b border-brand-stone py-3 text-brand-charcoal focus:outline-none focus:border-brand-charcoal transition-colors cursor-pointer">
+                                <option value="" disabled selected>Select Category...</option>
+                                <option value="Skincare">Skincare & Lotions</option>
+                                <option value="Fragrance">Fine Fragrance / Perfume</option>
+                                <option value="Color Cosmetics">Color Cosmetics</option>
+                                <option value="Haircare">Haircare Solutions</option>
+                            </select>
+                            <div class="absolute right-0 bottom-4 pointer-events-none">
+                                <svg class="w-4 h-4 text-brand-charcoal/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <label class="block text-xs tracking-[0.1em] uppercase text-brand-charcoal/70 mb-2">Estimated MOQ (Minimum Order)</label>
+                            <select name="MOQ" required class="w-full bg-transparent border-b border-brand-stone py-3 text-brand-charcoal focus:outline-none focus:border-brand-charcoal transition-colors cursor-pointer">
+                                <option value="" disabled selected>Select Volume...</option>
+                                <option value="1,000 - 5,000 units">1,000 - 5,000 units</option>
+                                <option value="5,000 - 25,000 units">5,000 - 25,000 units</option>
+                                <option value="25,000 - 100,000 units">25,000 - 100,000 units</option>
+                                <option value="100,000+ units">100,000+ units</option>
+                            </select>
+                            <div class="absolute right-0 bottom-4 pointer-events-none">
+                                <svg class="w-4 h-4 text-brand-charcoal/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs tracking-[0.1em] uppercase text-brand-charcoal/70 mb-2">Project Brief</label>
+                        <textarea name="Brief" rows="3" placeholder="Briefly describe your formulation goals..." class="w-full bg-transparent border-b border-brand-stone py-3 text-brand-charcoal focus:outline-none focus:border-brand-charcoal transition-colors resize-none"></textarea>
+                    </div>
+
+                    <div class="pt-6">
+                        <button type="submit" class="w-full py-4 bg-brand-charcoal text-brand-cream text-sm tracking-[0.1em] uppercase font-medium hover:bg-brand-rose transition-colors duration-300">
+                            Submit Inquiry
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-charcoal text-brand-cream/50 py-12">
+        <div class="container mx-auto px-6 text-center text-xs tracking-wider">
+            %%FOOTER%%
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Dynamic Navbar
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('bg-brand-cream/90', 'backdrop-blur-md', 'border-brand-stone', 'py-4');
+                    nav.classList.remove('py-6', 'border-transparent');
+                } else {
+                    nav.classList.add('py-6', 'border-transparent');
+                    nav.classList.remove('bg-brand-cream/90', 'backdrop-blur-md', 'border-brand-stone', 'py-4');
+                }
+            });
+
+            // 2. Hero Animations
+            // Staggered text reveal
+            gsap.fromTo('.gs-hero-text > *', 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power3.out", delay: 0.2 }
+            );
+
+            // Elegant Image Unmask/Scale effect
+            gsap.fromTo('.reveal-image-container', 
+                { clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)" }, 
+                { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", duration: 1.5, ease: "power4.inOut" }
+            );
+            gsap.to('.reveal-image', {
+                scale: 1,
+                duration: 2,
+                ease: "power3.out"
+            });
+
+            // 3. Scroll Reveals
+            // Standard fade up
+            gsap.utils.toArray('.gs-reveal').forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 }, 
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 1.2, 
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            // Staggered grids (for the React-injected components like galleries/products)
+            gsap.utils.toArray('.gs-stagger').forEach(grid => {
+                // We use a slight hack here to animate children even if injected later, 
+                // but since React outputs static HTML into the iframe, this works perfectly.
+                const children = grid.children;
+                if(children.length > 0) {
+                    gsap.fromTo(children,
+                        { y: 30, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 1,
+                            stagger: 0.1,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: grid,
+                                start: "top 80%"
+                            }
+                        }
+                    );
+                }
+            });
+        });
+    </script>
+</body>
+</html>
