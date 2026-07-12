@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%%SITE_TITLE%%</title>
+    
+    <!-- Fonts: Outfit for approachable, authoritative headings, Inter for clear UI text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        pest: {
+                            dark: '#0F172A',       // Slate 900
+                            green: '#166534',      // Forest Green (Trust/Eco)
+                            lime: '#84CC16',       // Lime 500 (Action/Urgency)
+                            bg: '#F8FAFC',         // Slate 50
+                            card: '#FFFFFF',
+                            muted: '#64748B'
+                        }
+                    },
+                    boxShadow: {
+                        'float': '0 20px 40px -15px rgba(22, 101, 52, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Tweaks for Estimator UI -->
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #0F172A;
+            overflow-x: hidden;
+        }
+
+        /* Custom Checkbox/Radio Styling for the Estimator */
+        .estimator-radio:checked + div {
+            border-color: #84CC16;
+            background-color: rgba(132, 204, 22, 0.1);
+        }
+        .estimator-radio:checked + div .radio-dot {
+            background-color: #84CC16;
+            border-color: #84CC16;
+        }
+        
+        .estimator-checkbox:checked + div {
+            border-color: #84CC16;
+            background-color: rgba(132, 204, 22, 0.1);
+        }
+        .estimator-checkbox:checked + div .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Abstract Shield Background */
+        .shield-bg {
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-pest-lime selection:text-pest-dark">
+
+    <!-- Alert Banner -->
+    <div class="bg-pest-dark text-white text-xs font-semibold tracking-wider uppercase py-2 text-center z-50 relative">
+        <span class="text-pest-lime animate-pulse mr-2">●</span> 24/7 Emergency Response Available
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-40 top-8 py-4 px-6 lg:px-12 flex justify-between items-center transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div class="text-2xl font-display font-bold tracking-tight text-pest-green flex items-center gap-2">
+            <svg class="w-6 h-6 text-pest-lime" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L3 6v6.5c0 5.05 3.81 9.85 9 11.5 5.19-1.65 9-6.45 9-11.5V6l-9-4zm0 2.18l7 3.12v5.2c0 4.14-2.81 8.08-7 9.5-4.19-1.42-7-5.36-7-9.5V7.3l7-3.12z"/></svg>
+            %%SITE_TITLE%%
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-pest-muted">
+            <a href="#services" class="hover:text-pest-green transition-colors">Target Pests</a>
+            <a href="#estimator" class="hover:text-pest-green transition-colors">Instant Quote</a>
+            <a href="#about" class="hover:text-pest-green transition-colors">Our Guarantee</a>
+        </div>
+        <a href="#book" class="px-6 py-2.5 bg-pest-green text-white text-sm font-bold rounded-lg hover:bg-pest-dark transition-colors shadow-lg">
+            Schedule Inspection
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 shield-bg bg-pest-green overflow-hidden">
+        <!-- Abstract Topo Map Background -->
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        
+        <div class="container mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-white gs-hero">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-pest-lime text-xs font-bold uppercase tracking-wide mb-6">
+                    Licensed & Insured Professionals
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-display font-extrabold leading-[1.1] mb-6">
+                    Take Back Your Home.
+                </h1>
+                <p class="text-lg text-green-100 mb-10 leading-relaxed max-w-lg">
+                    Eco-friendly, fast-acting pest eradication. We target the source to guarantee a pest-free environment for your family and pets.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#estimator" class="px-8 py-4 bg-pest-lime text-pest-dark rounded-xl font-bold hover:bg-white transition-colors duration-300 shadow-lg shadow-pest-lime/20 text-lg flex items-center gap-2">
+                        Get an Instant Quote
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden gs-hero border-4 border-white/10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1584820927498-cafe4c10a12e?auto=format&fit=crop&q=80" alt="Pest Control Technician" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </header>
+
+    <!-- Emergency Guarantee Checklist -->
+    <section class="py-12 -mt-20 relative z-20">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="bg-white rounded-2xl shadow-float border border-gray-100 p-8 grid grid-cols-1 md:grid-cols-3 gap-8 gs-reveal">
+                
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-pest-lime/20 flex items-center justify-center shrink-0 text-pest-green">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-pest-dark mb-1">Rapid Response</h3>
+                        <p class="text-sm text-pest-muted">Same-day service available for severe infestations and emergencies.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-pest-lime/20 flex items-center justify-center shrink-0 text-pest-green">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-pest-dark mb-1">Eco-Safe Solutions</h3>
+                        <p class="text-sm text-pest-muted">EPA-approved treatments that are entirely safe for children and pets.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-pest-lime/20 flex items-center justify-center shrink-0 text-pest-green">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-pest-dark mb-1">100% Guarantee</h3>
+                        <p class="text-sm text-pest-muted">If pests return between scheduled visits, we return and treat at no extra cost.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Cost Estimator -->
+    <section id="estimator" class="py-24 overflow-hidden relative">
+        <div class="absolute right-0 top-0 w-[500px] h-[500px] bg-pest-lime/5 rounded-full blur-[100px] -z-10"></div>
+        
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 gs-reveal">
+                <h2 class="text-pest-green font-bold tracking-widest uppercase text-sm mb-3">Transparent Pricing</h2>
+                <h3 class="text-4xl lg:text-5xl font-display font-extrabold text-pest-dark mb-4">Instant Quote Estimator</h3>
+                <p class="text-pest-muted">Select your property size and target pests to receive an immediate estimate for an initial treatment.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start max-w-6xl mx-auto gs-reveal">
+                
+                <!-- Hidden input mapped to React Form rate injection -->
+                <input type="hidden" id="baseRate" value="%%ESTIMATOR_RATES%%">
+
+                <!-- Estimator Controls -->
+                <div class="lg:col-span-7 space-y-10 bg-white p-8 rounded-3xl shadow-soft border border-gray-100">
+                    
+                    <!-- Property Size (Radio Multipliers) -->
+                    <div>
+                        <h4 class="font-bold text-lg mb-4 text-pest-dark">1. Property Size</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            
+                            <label class="relative cursor-pointer group">
+                                <input type="radio" name="sqft" value="1.0" class="peer sr-only estimator-radio" checked>
+                                <div class="border-2 border-gray-200 rounded-xl p-4 transition-all duration-200 hover:border-pest-lime/50 h-full">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 radio-dot transition-colors flex items-center justify-center"></div>
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                                    </div>
+                                    <span class="block font-bold text-pest-dark">Small</span>
+                                    <span class="block text-xs text-pest-muted mt-1">Up to 1,500 sq ft</span>
+                                </div>
+                            </label>
+
+                            <label class="relative cursor-pointer group">
+                                <input type="radio" name="sqft" value="1.5" class="peer sr-only estimator-radio">
+                                <div class="border-2 border-gray-200 rounded-xl p-4 transition-all duration-200 hover:border-pest-lime/50 h-full">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 radio-dot transition-colors flex items-center justify-center"></div>
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                    </div>
+                                    <span class="block font-bold text-pest-dark">Medium</span>
+                                    <span class="block text-xs text-pest-muted mt-1">1,500 - 3,000 sq ft</span>
+                                </div>
+                            </label>
+
+                            <label class="relative cursor-pointer group">
+                                <input type="radio" name="sqft" value="2.0" class="peer sr-only estimator-radio">
+                                <div class="border-2 border-gray-200 rounded-xl p-4 transition-all duration-200 hover:border-pest-lime/50 h-full">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 radio-dot transition-colors flex items-center justify-center"></div>
+                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>
+                                    </div>
+                                    <span class="block font-bold text-pest-dark">Large</span>
+                                    <span class="block text-xs text-pest-muted mt-1">3,000+ sq ft</span>
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <!-- Target Pests (Checkbox Add-ons) -->
+                    <div>
+                        <div class="flex justify-between items-end mb-4">
+                            <h4 class="font-bold text-lg text-pest-dark">2. Target Pests</h4>
+                            <span class="text-xs text-pest-muted">General prevention is included.</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            
+                            <!-- Base Service (Always selected visually for effect, $0 add-on) -->
+                            <div class="border-2 border-pest-lime bg-pest-lime/10 rounded-xl p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded bg-pest-lime text-white flex items-center justify-center"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
+                                    <span class="font-semibold text-pest-dark text-sm">General Ants & Spiders</span>
+                                </div>
+                            </div>
+
+                            <label class="relative cursor-pointer group">
+                                <input type="checkbox" class="peer sr-only estimator-checkbox pest-addon" value="75">
+                                <div class="border-2 border-gray-200 rounded-xl p-4 transition-all duration-200 hover:border-pest-lime/50 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-5 h-5 rounded border-2 border-gray-300 relative overflow-hidden transition-colors">
+                                            <svg class="w-3 h-3 text-pest-green absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transform scale-50 transition-all check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                        </div>
+                                        <span class="font-semibold text-pest-dark text-sm">Rodents (Mice/Rats)</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-pest-green">+$75</span>
+                                </div>
+                            </label>
+
+                            <label class="relative cursor-pointer group">
+                                <input type="checkbox" class="peer sr-only estimator-checkbox pest-addon" value="125">
+                                <div class="border-2 border-gray-200 rounded-xl p-4 transition-all duration-200 hover:border-pest-lime/50 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-5 h-5 rounded border-2 border-gray-300 relative overflow-hidden transition-colors">
+                                            <svg class="w-3 h-3 text-pest-green absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transform scale-50 transition-all check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                        </div>
+                                        <span class="font-semibold text-pest-dark text-sm">Roaches</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-pest-green">+$125</span>
+                                </div>
+                            </label>
+
+                            <label class="relative cursor-pointer group">
+                                <input type="checkbox" class="peer sr-only estimator-checkbox pest-addon" value="250">
+                                <div class="border-2 border-gray-200 rounded-xl p-4 transition-all duration-200 hover:border-pest-lime/50 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-5 h-5 rounded border-2 border-gray-300 relative overflow-hidden transition-colors">
+                                            <svg class="w-3 h-3 text-pest-green absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transform scale-50 transition-all check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                        </div>
+                                        <span class="font-semibold text-pest-dark text-sm">Termites (Inspection)</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-pest-green">+$250</span>
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estimator Output Panel -->
+                <div class="lg:col-span-5 bg-pest-dark rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-pest-lime/10 rounded-bl-full pointer-events-none"></div>
+                    
+                    <h4 class="font-bold text-lg mb-2">Estimated Treatment Cost</h4>
+                    <p class="text-pest-muted text-sm mb-8">Transparent pricing with no hidden fees.</p>
+
+                    <div class="bg-pest-dark border border-gray-800 rounded-xl p-6 mb-8 text-center relative">
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-pest-dark px-3 text-xs text-pest-lime font-bold tracking-widest uppercase">Your Total</span>
+                        <div class="text-5xl font-display font-extrabold text-white" id="estimateOutput">$0</div>
+                    </div>
+
+                    <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><svg class="w-4 h-4 text-pest-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Comprehensive interior & exterior spray</li>
+                        <li class="flex items-center gap-2"><svg class="w-4 h-4 text-pest-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Web removal & crack sealing</li>
+                        <li class="flex items-center gap-2"><svg class="w-4 h-4 text-pest-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 30-Day Eradication Guarantee</li>
+                    </ul>
+
+                    <a href="#book" class="block w-full py-4 text-center bg-pest-lime text-pest-dark rounded-xl font-bold text-lg hover:bg-white transition-colors shadow-lg">
+                        Proceed to Booking
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Services Showcase -->
+    <section id="services" class="py-24 bg-white border-y border-gray-200">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 gs-reveal">
+                <h2 class="text-pest-green font-bold tracking-widest uppercase text-sm mb-3">What We Treat</h2>
+                <h3 class="text-4xl font-display font-extrabold text-pest-dark">Complete Eradication Services</h3>
+            </div>
+            
+            <!-- React Injected Pest Services Grid -->
+            <!-- Expects grid cards highlighting bugs/rodents -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 gs-stagger">
+                %%PEST_SERVICES%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Company About Section -->
+    <section id="about" class="py-24 relative overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="gs-reveal order-2 lg:order-1 relative">
+                    <div class="absolute -inset-4 bg-pest-lime/20 rounded-[3rem] blur-xl -z-10 transform -rotate-3"></div>
+                    <img src="https://images.unsplash.com/photo-1590856029826-c7a73142bbf1?auto=format&fit=crop&q=80" alt="Family Safe Home" class="rounded-[2rem] w-full object-cover h-[450px] shadow-2xl">
+                </div>
+                
+                <div class="gs-reveal order-1 lg:order-2">
+                    <h2 class="text-pest-green font-bold tracking-widest uppercase text-sm mb-3">Protecting What Matters</h2>
+                    <h3 class="text-3xl lg:text-5xl font-display font-extrabold text-pest-dark mb-6">Local Experts. Global Standards.</h3>
+                    <div class="prose prose-lg text-pest-muted">
+                        %%COMPANY_DETAILS%%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-pest-dark text-white text-center">
+        <div class="container mx-auto px-6 lg:px-12">
+            <h2 class="text-pest-lime font-bold tracking-widest uppercase text-sm mb-12 gs-reveal">Trusted by Homeowners</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 gs-stagger">
+                %%REVIEWS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Funnel -->
+    <section id="book" class="py-32 bg-pest-bg relative">
+        <div class="container mx-auto px-6 max-w-3xl relative z-10 gs-reveal">
+            <div class="bg-white rounded-[2rem] p-8 md:p-12 shadow-float border border-gray-100">
+                <div class="text-center mb-10">
+                    <div class="w-16 h-16 bg-pest-green/10 text-pest-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h2 class="text-3xl font-display font-extrabold text-pest-dark mb-3">Request Inspection</h2>
+                    <p class="text-pest-muted">Secure your spot. A technician will call to confirm your appointment window within 1 hour.</p>
+                </div>
+                
+                <form action="mailto:%%CONTACT_EMAIL%%" method="POST" enctype="text/plain" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold tracking-wide uppercase text-pest-dark mb-2">Name</label>
+                            <input type="text" name="Name" required class="w-full bg-pest-bg border border-gray-200 rounded-xl px-4 py-3 text-pest-dark focus:outline-none focus:border-pest-lime focus:ring-1 focus:ring-pest-lime transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold tracking-wide uppercase text-pest-dark mb-2">Phone Number</label>
+                            <input type="tel" name="Phone" required class="w-full bg-pest-bg border border-gray-200 rounded-xl px-4 py-3 text-pest-dark focus:outline-none focus:border-pest-lime focus:ring-1 focus:ring-pest-lime transition-all">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold tracking-wide uppercase text-pest-dark mb-2">Property Address</label>
+                        <input type="text" name="Address" required placeholder="Street, City, Zip" class="w-full bg-pest-bg border border-gray-200 rounded-xl px-4 py-3 text-pest-dark focus:outline-none focus:border-pest-lime focus:ring-1 focus:ring-pest-lime transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold tracking-wide uppercase text-pest-dark mb-2">Primary Pest Concern</label>
+                        <select name="Concern" required class="w-full bg-pest-bg border border-gray-200 rounded-xl px-4 py-3 text-pest-dark focus:outline-none focus:border-pest-lime focus:ring-1 focus:ring-pest-lime transition-all cursor-pointer">
+                            <option value="" disabled selected>What are you seeing?</option>
+                            <option value="Ants/Spiders">Ants / Spiders / General Insects</option>
+                            <option value="Rodents">Mice / Rats</option>
+                            <option value="Termites">Termites / Wood Damage</option>
+                            <option value="Roaches">Roaches</option>
+                            <option value="Other">Other / Unknown</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full py-4 bg-pest-green text-white rounded-xl font-bold text-lg hover:bg-pest-dark transition-colors shadow-lg">
+                            Submit Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-pest-dark border-t border-gray-800 py-10">
+        <div class="container mx-auto px-6 text-center text-gray-500 text-sm">
+            %%FOOTER%%
+        </div>
+    </footer>
+
+    <!-- Scripts: GSAP Animations & Interactive Estimator Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. GSAP Animations ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-md');
+                    nav.classList.remove('py-4');
+                    nav.classList.add('py-3');
+                } else {
+                    nav.classList.remove('shadow-md');
+                    nav.classList.add('py-4');
+                    nav.classList.remove('py-3');
+                }
+            });
+
+            gsap.fromTo('.gs-hero', 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: "power3.out" }
+            );
+
+            gsap.utils.toArray('.gs-reveal').forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 }, 
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 1, 
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            gsap.utils.toArray('.gs-stagger').forEach(grid => {
+                const children = grid.children;
+                if(children.length > 0) {
+                    gsap.fromTo(children,
+                        { y: 30, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: grid,
+                                start: "top 80%"
+                            }
+                        }
+                    );
+                }
+            });
+
+            // --- 2. Interactive Estimator Logic ---
+            const baseRateInput = document.getElementById('baseRate');
+            const estimateOutput = document.getElementById('estimateOutput');
+            const radioSizeInputs = document.querySelectorAll('.estimator-radio');
+            const checkboxPestInputs = document.querySelectorAll('.estimator-checkbox');
+
+            // Parse base rate from React injected string (e.g. "$99", "99.00", "99")
+            const parseRate = (val) => {
+                const num = parseFloat(val.replace(/[^0-9.]/g, ''));
+                return isNaN(num) ? 99 : num; // Fallback to $99 if empty or invalid
+            };
+
+            const basePrice = parseRate(baseRateInput.value);
+
+            const calculateQuote = () => {
+                let multiplier = 1.0;
+                let addons = 0;
+
+                // Find selected radio multiplier
+                radioSizeInputs.forEach(radio => {
+                    if (radio.checked) {
+                        multiplier = parseFloat(radio.value);
+                    }
+                });
+
+                // Sum checked addons
+                checkboxPestInputs.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        addons += parseFloat(checkbox.value);
+                    }
+                });
+
+                // Formula: (Base * Size Multiplier) + Addons
+                const total = (basePrice * multiplier) + addons;
+
+                // Animate number count up for premium feel
+                const currentVal = parseFloat(estimateOutput.innerText.replace(/[^0-9.]/g, '')) || 0;
+                
+                gsap.to({ val: currentVal }, {
+                    val: total,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    onUpdate: function() {
+                        estimateOutput.innerText = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            maximumFractionDigits: 0
+                        }).format(this.targets()[0].val);
+                    }
+                });
+            };
+
+            // Bind Event Listeners
+            radioSizeInputs.forEach(radio => radio.addEventListener('change', calculateQuote));
+            checkboxPestInputs.forEach(checkbox => checkbox.addEventListener('change', calculateQuote));
+
+            // Initial calculation
+            calculateQuote();
+        });
+    </script>
+</body>
+</html>

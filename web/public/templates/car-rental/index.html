@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%%SITE_TITLE%%</title>
+    
+    <!-- Fonts: Montserrat for aggressive/wide automotive headings, Inter for specs/details -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        auto: {
+                            black: '#050505',      // Deep asphalt
+                            dark: '#121212',       // Panel backgrounds
+                            gray: '#1F1F1F',       // Borders & subtle blocks
+                            red: '#E60000',        // High-octane accent
+                            white: '#FFFFFF',
+                            muted: '#888888'
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom CSS Tweaks for Interactive Showroom Elements -->
+    <style>
+        body {
+            background-color: #050505;
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        /* Diagonal slice effect for automotive feel */
+        .clip-diagonal {
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+        
+        .clip-button {
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        /* 
+           These classes are targeted by our Vanilla JS to add interactive 
+           hover effects to the React-injected fleet cards in %%SHOWROOM%% 
+        */
+        .fleet-card {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: linear-gradient(145deg, #121212, #0a0a0a);
+            border: 1px solid #1F1F1F;
+        }
+        .fleet-card:hover {
+            transform: translateY(-5px);
+            border-color: #E60000;
+            box-shadow: 0 10px 30px -10px rgba(230, 0, 0, 0.15);
+        }
+        .fleet-img-wrap img {
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .fleet-card:hover .fleet-img-wrap img {
+            transform: scale(1.08) translateX(5px);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-auto-red selection:text-white">
+
+    <!-- Aggressive Sticky Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 py-5 px-6 lg:px-12 flex justify-between items-center transition-all duration-300 border-b border-transparent">
+        <div class="text-2xl font-display font-black tracking-tighter uppercase italic">
+            %%SITE_TITLE%%
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-xs font-bold tracking-[0.15em] uppercase text-auto-muted">
+            <a href="#showroom" class="hover:text-white transition-colors">The Fleet</a>
+            <a href="#about" class="hover:text-white transition-colors">Our Standard</a>
+            <a href="#reviews" class="hover:text-white transition-colors">Clients</a>
+        </div>
+        <a href="#reserve" class="px-8 py-3 bg-auto-red text-white text-xs font-bold tracking-[0.15em] uppercase clip-button hover:bg-white hover:text-auto-black transition-colors duration-300">
+            Reserve
+        </a>
+    </nav>
+
+    <!-- High-Octane Hero Section -->
+    <header class="relative min-h-screen flex items-center pt-20 pb-24 overflow-hidden clip-diagonal bg-auto-dark">
+        <!-- Background elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-auto-black via-auto-black/80 to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80" alt="Luxury Sports Car" class="w-full h-full object-cover object-center gs-hero-bg">
+        </div>
+        
+        <div class="container mx-auto px-6 lg:px-12 relative z-20">
+            <div class="max-w-3xl gs-hero">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-[2px] bg-auto-red"></div>
+                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-auto-red">Premium Fleet</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-black uppercase italic leading-[0.9] tracking-tighter mb-8">
+                    Unleash <br> The Drive.
+                </h1>
+                <p class="text-lg text-auto-muted font-medium mb-10 max-w-lg leading-relaxed">
+                    Experience uncompromised performance and luxury. Choose from our curated selection of high-end vehicles for your next journey.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <a href="#showroom" class="px-10 py-4 bg-auto-red text-white text-sm font-bold tracking-[0.1em] uppercase clip-button hover:bg-white hover:text-auto-black transition-colors duration-300 flex items-center gap-3">
+                        View Showroom
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Track Lines -->
+        <div class="absolute bottom-10 left-0 w-full h-[1px] bg-white/10 z-20"></div>
+        <div class="absolute bottom-12 left-0 w-full h-[1px] bg-white/5 z-20"></div>
+    </header>
+
+    <!-- Quick Search / Filter Bar (Visual anchor leading to Showroom) -->
+    <div class="container mx-auto px-6 lg:px-12 -mt-16 relative z-30 mb-24 gs-reveal">
+        <div class="bg-auto-dark border border-auto-gray p-6 lg:p-8 flex flex-col md:flex-row gap-6 items-end justify-between shadow-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1 w-full">
+                <div>
+                    <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-2">Pick-up Location</label>
+                    <div class="text-sm font-medium border-b border-auto-gray pb-2">Main Terminal / Concierge</div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-2">Pick-up Date</label>
+                    <div class="text-sm font-medium border-b border-auto-gray pb-2">Select Date</div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-2">Return Date</label>
+                    <div class="text-sm font-medium border-b border-auto-gray pb-2">Select Date</div>
+                </div>
+            </div>
+            <a href="#reserve" class="px-8 py-3 bg-white text-auto-black text-xs font-bold tracking-[0.1em] uppercase hover:bg-auto-red hover:text-white transition-colors whitespace-nowrap w-full md:w-auto text-center">
+                Check Availability
+            </a>
+        </div>
+    </div>
+
+    <!-- The Showroom (Fleet Layout) -->
+    <section id="showroom" class="py-24">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gs-reveal">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-[2px] bg-auto-red"></div>
+                        <span class="text-xs font-bold tracking-[0.2em] uppercase text-auto-red">The Collection</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-display font-black uppercase italic tracking-tighter">Choose Your Class</h2>
+                </div>
+                <!-- Visual filters for aesthetics -->
+                <div class="flex gap-6 mt-6 md:mt-0 text-xs font-bold tracking-[0.1em] uppercase text-auto-muted">
+                    <span class="text-white border-b-2 border-auto-red pb-1 cursor-pointer">All Models</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">Sports</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">Luxury</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">SUV</span>
+                </div>
+            </div>
+            
+            <!-- React Injected Showroom -->
+            <!-- The injected HTML should use classes like 'fleet-card' and 'fleet-img-wrap' for built-in effects -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gs-stagger" id="fleet-container">
+                %%SHOWROOM%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Details / Specs -->
+    <section id="about" class="py-32 bg-auto-dark relative overflow-hidden border-y border-auto-gray">
+        <!-- Giant background watermark -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-display font-black italic text-white/[0.02] whitespace-nowrap pointer-events-none select-none z-0">
+            PERFORMANCE
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="gs-reveal order-2 lg:order-1 relative h-[500px]">
+                    <div class="absolute inset-0 bg-auto-red/20 blur-3xl rounded-full"></div>
+                    <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80" alt="Car Detail" class="w-full h-full object-cover border border-auto-gray grayscale hover:grayscale-0 transition-all duration-700 relative z-10">
+                </div>
+                
+                <div class="gs-reveal order-1 lg:order-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-[2px] bg-auto-red"></div>
+                        <span class="text-xs font-bold tracking-[0.2em] uppercase text-auto-red">Our Standard</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-display font-black uppercase italic tracking-tighter mb-8">Engineering Meets Elegance.</h2>
+                    <div class="prose prose-invert prose-lg text-auto-muted">
+                        %%COMPANY_DETAILS%%
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-8 mt-12 pt-12 border-t border-auto-gray">
+                        <div>
+                            <div class="text-3xl font-display font-black text-white mb-2">24/7</div>
+                            <div class="text-xs font-bold tracking-widest uppercase text-auto-muted">Concierge Support</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-display font-black text-white mb-2">100%</div>
+                            <div class="text-xs font-bold tracking-widest uppercase text-auto-muted">Fully Insured</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Reviews -->
+    <section id="reviews" class="py-24">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 gs-reveal">
+                <h2 class="text-3xl md:text-5xl font-display font-black uppercase italic tracking-tighter mb-4">Driver Experiences</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 gs-stagger">
+                %%REVIEWS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking / Contact Funnel -->
+    <section id="reserve" class="py-32 bg-auto-dark clip-diagonal relative">
+        <div class="container mx-auto px-6 max-w-4xl relative z-10 gs-reveal">
+            <div class="bg-auto-black border border-auto-gray p-8 md:p-14 shadow-2xl relative overflow-hidden">
+                <!-- Red accent line -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-auto-red"></div>
+                
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-display font-black uppercase italic tracking-tighter mb-4">Secure Your Vehicle</h2>
+                    <p class="text-auto-muted font-medium">Complete the form below to request a reservation. Our concierge will contact you to finalize details.</p>
+                </div>
+                
+                <form action="mailto:%%CONTACT_EMAIL%%" method="POST" enctype="text/plain" class="space-y-8">
+                    <!-- Personal Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-3">Full Name</label>
+                            <input type="text" name="Name" required class="w-full bg-auto-dark border border-auto-gray px-5 py-4 text-white focus:outline-none focus:border-auto-red transition-colors text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-3">Phone Number</label>
+                            <input type="tel" name="Phone" required class="w-full bg-auto-dark border border-auto-gray px-5 py-4 text-white focus:outline-none focus:border-auto-red transition-colors text-sm">
+                        </div>
+                    </div>
+
+                    <!-- Rental Specifics -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-3">Pick-up Date & Time</label>
+                            <input type="datetime-local" name="Pickup" required class="w-full bg-auto-dark border border-auto-gray px-5 py-4 text-white focus:outline-none focus:border-auto-red transition-colors text-sm [color-scheme:dark]">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-3">Return Date & Time</label>
+                            <input type="datetime-local" name="Return" required class="w-full bg-auto-dark border border-auto-gray px-5 py-4 text-white focus:outline-none focus:border-auto-red transition-colors text-sm [color-scheme:dark]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold tracking-widest uppercase text-auto-muted mb-3">Desired Vehicle Class</label>
+                        <select name="Vehicle_Class" required class="w-full bg-auto-dark border border-auto-gray px-5 py-4 text-white focus:outline-none focus:border-auto-red transition-colors text-sm appearance-none cursor-pointer">
+                            <option value="" disabled selected>Select an option...</option>
+                            <option value="Sports & Performance">Sports & Performance</option>
+                            <option value="Luxury Sedan">Luxury Sedan</option>
+                            <option value="Premium SUV">Premium SUV</option>
+                            <option value="Exotic / Supercar">Exotic / Supercar</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full py-5 bg-auto-red text-white text-sm font-bold tracking-[0.15em] uppercase clip-button hover:bg-white hover:text-auto-black transition-all duration-300">
+                            Request Reservation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-auto-black py-12 border-t border-auto-gray">
+        <div class="container mx-auto px-6 text-center text-auto-muted text-xs tracking-widest uppercase font-medium">
+            %%FOOTER%%
+        </div>
+    </footer>
+
+    <!-- GSAP Animations & Interactive Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. GSAP Scroll Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Dynamic Navbar
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('bg-auto-black/95', 'backdrop-blur-md', 'border-auto-gray');
+                    nav.classList.remove('py-5', 'border-transparent');
+                    nav.classList.add('py-4');
+                } else {
+                    nav.classList.add('py-5', 'border-transparent');
+                    nav.classList.remove('bg-auto-black/95', 'backdrop-blur-md', 'border-auto-gray', 'py-4');
+                }
+            });
+
+            // Hero Entrance
+            gsap.fromTo('.gs-hero-bg',
+                { scale: 1.1, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 2, ease: "power3.out" }
+            );
+
+            gsap.fromTo('.gs-hero > *', 
+                { y: 40, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power3.out", delay: 0.5 }
+            );
+
+            // General Scroll Reveals
+            gsap.utils.toArray('.gs-reveal').forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 }, 
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 1, 
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            // Staggered Layouts (Showroom & Reviews)
+            gsap.utils.toArray('.gs-stagger').forEach(grid => {
+                const children = grid.children;
+                if(children.length > 0) {
+                    gsap.fromTo(children,
+                        { y: 30, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: grid,
+                                start: "top 80%"
+                            }
+                        }
+                    );
+                }
+            });
+
+            // 2. Interactive Fleet Logic
+            // This function ensures that when React injects the %%SHOWROOM%% HTML,
+            // we can still apply dynamic hover state classes if they don't already have them.
+            // It runs once on load, and you can re-call it in React after injection if needed.
+            const enhanceFleetCards = () => {
+                const container = document.getElementById('fleet-container');
+                if(!container) return;
+                
+                // Assuming React injects elements like <div class="react-injected-card">...</div>
+                // We map them to our CSS classes defined in the <style> block.
+                const cards = container.children;
+                Array.from(cards).forEach(card => {
+                    // Add base styling to injected cards to match the theme
+                    card.classList.add('fleet-card', 'rounded-lg', 'overflow-hidden', 'relative', 'group');
+                    
+                    // Look for image wrappers inside the injected card to apply zoom effect
+                    const img = card.querySelector('img');
+                    if(img) {
+                        const wrapper = img.parentElement;
+                        wrapper.classList.add('fleet-img-wrap', 'overflow-hidden');
+                    }
+                });
+            };
+
+            // Call it immediately (will affect %%SHOWROOM%% if rendered server-side or synchronously)
+            enhanceFleetCards();
+            
+            // Optional: Set up a MutationObserver to apply classes when React injects data asynchronously
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes.length) {
+                        enhanceFleetCards();
+                    }
+                });
+            });
+            
+            const fleetContainer = document.getElementById('fleet-container');
+            if(fleetContainer) {
+                observer.observe(fleetContainer, { childList: true });
+            }
+        });
+    </script>
+</body>
+</html>

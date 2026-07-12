@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%%SITE_TITLE%%</title>
+    
+    <!-- Fonts: Barlow Semi Condensed for structural, industrial headlines; Inter for high-readability technical data -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,600;0,700;0,800;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Barlow Semi Condensed', 'sans-serif'],
+                    },
+                    colors: {
+                        steel: {
+                            900: '#0F172A',       // Slate 900 (Deep Iron)
+                            800: '#1E293B',       // Slate 800 (Raw Concrete)
+                            700: '#334155',       // Structural border
+                            100: '#F1F5F9',       // Clean background
+                            amber: '#F59E0B'      // Architectural Safety Orange
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background-color: #F1F5F9;
+            color: #0F172A;
+            overflow-x: hidden;
+        }
+
+        /* Blueprint grid overlay pattern */
+        .blueprint-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+
+        .blueprint-grid-dark {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Interactive Timeline styles */
+        .timeline-line {
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Custom styled Range Slider */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 0px; /* Sharp architectural edges */
+            background: #F59E0B;
+            cursor: pointer;
+            border: 2px solid #0F172A;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-steel-amber selection:text-steel-900">
+
+    <!-- Heavy-Duty Header Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 py-6 px-6 lg:px-12 flex justify-between items-center transition-all duration-300 border-b border-gray-200 bg-white/90 backdrop-blur-md">
+        <div class="text-2xl font-display font-extrabold tracking-tight uppercase text-steel-900">
+            %%SITE_TITLE%% <span class="text-steel-amber">.</span>
+        </div>
+        <div class="hidden md:flex items-center gap-10 text-xs font-bold tracking-widest uppercase text-steel-700">
+            <a href="#services" class="hover:text-steel-amber transition-colors">Services</a>
+            <a href="#timeline" class="hover:text-steel-amber transition-colors">The Process</a>
+            <a href="#estimator" class="hover:text-steel-amber transition-colors">Estimator</a>
+            <a href="#portfolio" class="hover:text-steel-amber transition-colors">Portfolio</a>
+        </div>
+        <a href="#contact" class="px-5 py-3 bg-steel-900 text-white text-xs font-bold tracking-widest uppercase hover:bg-steel-amber hover:text-steel-900 transition-colors">
+            Request Bid
+        </a>
+    </nav>
+
+    <!-- Heavy Hero Section -->
+    <header class="relative min-h-screen flex items-center pt-24 pb-20 bg-steel-900 overflow-hidden blueprint-grid-dark">
+        <div class="absolute inset-0 z-0 opacity-40">
+            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80" alt="Construction Infrastructure" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-steel-900 via-steel-900/80 to-transparent"></div>
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-12 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-8 text-white gs-hero">
+                <div class="inline-flex items-center gap-3 px-3 py-1 bg-white/5 border border-white/10 text-steel-amber text-xs font-bold tracking-widest uppercase mb-6">
+                    <span class="w-2 h-2 bg-steel-amber block animate-pulse"></span> Commercial & Industrial General Contractor
+                </div>
+                <h1 class="text-6xl md:text-8xl font-display font-extrabold uppercase tracking-tight leading-[0.95] mb-8">
+                    We Build <br><span class="text-transparent stroke-text style-span" style="-webkit-text-stroke: 1px white;">For Generations.</span>
+                </h1>
+                <p class="text-lg text-slate-300 font-medium max-w-xl leading-relaxed mb-10">
+                    Delivering institutional-grade general contracting, architectural build-outs, and value engineering safely, on time, and completely on budget.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#estimator" class="px-8 py-4 bg-steel-amber text-steel-900 text-sm font-bold tracking-widest uppercase hover:bg-white transition-colors duration-300 shadow-lg">
+                        Calculate Project Costs
+                    </a>
+                    <a href="#portfolio" class="px-8 py-4 border border-white/20 text-white text-sm font-bold tracking-widest uppercase hover:bg-white/10 transition-colors duration-300">
+                        Our Work
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Structural Build Services Showcase -->
+    <section id="services" class="py-24 bg-white border-b border-gray-200">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-baseline mb-16 border-b border-gray-200 pb-8 gs-reveal">
+                <div>
+                    <span class="text-xs font-bold tracking-widest uppercase text-steel-amber">Capabilities</span>
+                    <h2 class="text-4xl md:text-5xl font-display font-extrabold uppercase tracking-tight text-steel-900 mt-2">Core Build Services</h2>
+                </div>
+                <p class="text-sm text-slate-500 max-w-sm mt-4 md:mt-0">Integrated project delivery methods executed by field-tested professionals.</p>
+            </div>
+            
+            <!-- React Injected Build Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 gs-stagger">
+                %%BUILD_SERVICES%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Interactive Project Timeline Tracker -->
+    <section id="timeline" class="py-24 bg-steel-100 blueprint-grid relative">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 gs-reveal">
+                <span class="text-xs font-bold tracking-widest uppercase text-steel-amber">Execution Model</span>
+                <h2 class="text-4xl font-display font-extrabold uppercase tracking-tight text-steel-900 mt-2">Project Delivery Timeline</h2>
+            </div>
+
+            <!-- Master Tracker Navigation Interface -->
+            <div class="max-w-5xl mx-auto bg-white border border-gray-200 p-8 rounded-none shadow-sm gs-reveal">
+                <div class="relative mb-12">
+                    <!-- Progress Line Tracking Background Bar -->
+                    <div class="absolute top-1/2 left-0 w-full h-[2px] bg-slate-200 -translate-y-1/2 z-0"></div>
+                    <div id="timeline-progress" class="absolute top-1/2 left-0 h-[2px] bg-steel-amber -translate-y-1/2 z-0 timeline-line" style="width: 0%;"></div>
+                    
+                    <!-- Steps Intermediary Buttons -->
+                    <div class="relative z-10 flex justify-between items-center">
+                        <button onclick="setTimelineStep(0)" class="timeline-dot w-10 h-10 bg-steel-900 border-2 border-steel-amber text-white font-display text-sm font-bold flex items-center justify-center focus:outline-none">01</button>
+                        <button onclick="setTimelineStep(1)" class="timeline-dot w-10 h-10 bg-white border-2 border-slate-300 text-slate-400 font-display text-sm font-bold flex items-center justify-center focus:outline-none">02</button>
+                        <button onclick="setTimelineStep(2)" class="timeline-dot w-10 h-10 bg-white border-2 border-slate-300 text-slate-400 font-display text-sm font-bold flex items-center justify-center focus:outline-none">03</button>
+                        <button onclick="setTimelineStep(3)" class="timeline-dot w-10 h-10 bg-white border-2 border-slate-300 text-slate-400 font-display text-sm font-bold flex items-center justify-center focus:outline-none">04</button>
+                        <button onclick="setTimelineStep(4)" class="timeline-dot w-10 h-10 bg-white border-2 border-slate-300 text-slate-400 font-display text-sm font-bold flex items-center justify-center focus:outline-none">05</button>
+                    </div>
+                </div>
+
+                <!-- Descriptive Output Viewport -->
+                <div class="bg-steel-100 p-6 border-l-4 border-steel-900 min-h-[160px]" id="timeline-content">
+                    <!-- Loaded dynamically via JavaScript below -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Cost Estimator Section -->
+    <section id="estimator" class="py-24 bg-steel-900 text-white relative border-y border-steel-700 blueprint-grid-dark">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 gs-reveal">
+                <span class="text-xs font-bold tracking-widest uppercase text-steel-amber">Feasibility Assessment</span>
+                <h2 class="text-4xl font-display font-extrabold uppercase tracking-tight text-white mt-2">Blueprint Budget Estimator</h2>
+                <p class="text-sm text-slate-400 mt-4">Adjust project criteria to model rough institutional planning projections.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 max-w-5xl mx-auto items-stretch gs-reveal">
+                
+                <!-- Inputs Controls Panel -->
+                <div class="lg:col-span-7 bg-steel-800 border border-steel-700 p-8 flex flex-col justify-between">
+                    <div>
+                        <!-- Structure Type Classification Selector -->
+                        <h4 class="font-display uppercase text-sm tracking-widest text-steel-amber font-bold mb-4">1. Build Category</h4>
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <button id="btn-residential" onclick="setBuildType('residential')" class="py-4 border-2 border-steel-amber bg-steel-amber/10 text-white font-display text-xs font-bold tracking-widest uppercase transition-all">
+                                Residential Build
+                            </button>
+                            <button id="btn-commercial" onclick="setBuildType('commercial')" class="py-4 border-2 border-steel-700 hover:border-slate-400 text-slate-400 hover:text-white font-display text-xs font-bold tracking-widest uppercase transition-all">
+                                Commercial Build
+                            </button>
+                        </div>
+
+                        <!-- Square Footage Slider -->
+                        <div class="mb-4 flex justify-between items-baseline">
+                            <h4 class="font-display uppercase text-sm tracking-widest text-steel-amber font-bold">2. Total Area Size</h4>
+                            <span class="font-mono text-white font-bold"><span id="sqft-label">2,500</span> SQ FT</span>
+                        </div>
+                        <input type="range" id="sqft-slider" min="500" max="15000" step="100" value="2500" class="w-full bg-steel-700 h-1 outline-none appearance-none cursor-pointer mb-2">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                            <span>500 SQ FT</span>
+                            <span>15,000 SQ FT</span>
+                        </div>
+                    </div>
+
+                    <!-- Quality/Finishing Tier Controls -->
+                    <div class="mt-8">
+                        <h4 class="font-display uppercase text-sm tracking-widest text-steel-amber font-bold mb-3">3. Finishing Tier Specification</h4>
+                        <select id="finishing-tier" class="w-full bg-steel-900 border border-steel-700 px-4 py-3 text-sm text-white focus:outline-none focus:border-steel-amber appearance-none cursor-pointer">
+                            <option value="1.0">Standard Institutional (Base Spec)</option>
+                            <option value="1.3">Premium Engineered Architectural</option>
+                            <option value="1.65">High-End Luxury / Specialty Heavy Industrial</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Real-Time Cost Evaluation Sidebar -->
+                <div class="lg:col-span-5 bg-white text-steel-900 p-8 flex flex-col justify-between border-t-4 border-steel-amber">
+                    <div>
+                        <h4 class="font-display uppercase text-sm tracking-widest text-slate-500 font-bold mb-2">Project Evaluation Range</h4>
+                        <p class="text-xs text-slate-400 mb-8">Calculated estimate encompasses foundation work, shell construction, and core mechanical provisions.</p>
+                        
+                        <div class="border-b border-slate-200 pb-6 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Low-End Range</span>
+                            <div id="cost-low" class="text-4xl font-display font-extrabold text-steel-900">$0</div>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-steel-amber">High-End Target</span>
+                            <div id="cost-high" class="text-5xl font-display font-extrabold text-steel-900">$0</div>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="block w-full py-4 text-center bg-steel-900 text-white font-display text-xs font-bold tracking-widest uppercase hover:bg-steel-amber hover:text-steel-900 transition-colors mt-8">
+                        Lock In Project Bid
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Portfolio Grid Section -->
+    <section id="portfolio" class="py-24 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-baseline mb-16 border-b border-gray-200 pb-8 gs-reveal">
+                <div>
+                    <span class="text-xs font-bold tracking-widest uppercase text-steel-amber">Case Studies</span>
+                    <h2 class="text-4xl md:text-5xl font-display font-extrabold uppercase tracking-tight text-steel-900 mt-2">Completed Structures</h2>
+                </div>
+            </div>
+            
+            <!-- React Injected Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 gs-stagger">
+                %%PROJECT_PORTFOLIO%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Structural Company Overview / Blueprint Specs -->
+    <section class="py-24 bg-steel-100 border-t border-gray-200 blueprint-grid">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative h-[480px] gs-reveal">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80" alt="Job Site Inspection" class="w-full h-full object-cover shadow-lg border border-gray-200">
+                    <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-steel-amber/10 border-2 border-dashed border-steel-amber/30 -z-10 hidden md:block"></div>
+                </div>
+                
+                <div class="gs-reveal">
+                    <span class="text-xs font-bold tracking-widest uppercase text-steel-amber">Operations & Safety</span>
+                    <h2 class="text-4xl font-display font-extrabold uppercase tracking-tight text-steel-900 mt-2 mb-6">Rigorous Engineering.<br>Transparent Delivery.</h2>
+                    <div class="prose prose-slate prose-lg max-w-none text-slate-600">
+                        %%COMPANY_DETAILS%%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Endorsements -->
+    <section class="py-24 bg-steel-900 text-white text-center">
+        <div class="container mx-auto px-6 lg:px-12">
+            <span class="text-xs font-bold tracking-widest uppercase text-steel-amber mb-12 block gs-reveal">Vouched Assets</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 gs-stagger">
+                %%REVIEWS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrated Bid Form / Contact Funnel -->
+    <section id="contact" class="py-24 bg-white border-t border-gray-200">
+        <div class="container mx-auto px-6 max-w-4xl gs-reveal">
+            <div class="border border-gray-200 p-8 md:p-12 shadow-sm bg-steel-100 blueprint-grid">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-display font-extrabold uppercase tracking-tight text-steel-900 mb-3">Initiate Project Bid</h2>
+                    <p class="text-slate-600 text-sm max-w-md mx-auto">Submit your construction spec documents and area plans. Our commercial underwriting team will respond within 3 business days.</p>
+                </div>
+                
+                <form action="mailto:%%CONTACT_EMAIL%%" method="POST" enctype="text/plain" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-steel-900 mb-2">Company / Entity Name</label>
+                            <input type="text" name="Client_Name" required class="w-full bg-white border border-gray-300 px-4 py-3 text-steel-900 text-sm focus:outline-none focus:border-steel-amber">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold tracking-widest uppercase text-steel-900 mb-2">Representative Phone</label>
+                            <input type="tel" name="Phone" required class="w-full bg-white border border-gray-300 px-4 py-3 text-steel-900 text-sm focus:outline-none focus:border-steel-amber">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-[10px] font-bold tracking-widest uppercase text-steel-900 mb-2">Project Site Coordinates / Address</label>
+                        <input type="text" name="Location" required class="w-full bg-white border border-gray-300 px-4 py-3 text-steel-900 text-sm focus:outline-none focus:border-steel-amber">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold tracking-widest uppercase text-steel-900 mb-2">Scope Summary</label>
+                        <textarea name="Scope_Details" required rows="4" placeholder="Detail specific build outcomes, architectural mandates, or critical timeline targets..." class="w-full bg-white border border-gray-300 px-4 py-3 text-steel-900 text-sm focus:outline-none focus:border-steel-amber resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-steel-900 text-white font-display text-xs font-bold tracking-widest uppercase hover:bg-steel-amber hover:text-steel-900 transition-colors">
+                        Submit Construction Brief
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Structural Footer -->
+    <footer class="bg-steel-900 py-12 border-t border-steel-700">
+        <div class="container mx-auto px-6 text-center text-slate-500 text-xs tracking-widest uppercase font-mono">
+            %%FOOTER%%
+        </div>
+    </footer>
+
+    <!-- Animations, Interactive Estimates, & Process Timeline Drivers -->
+    <script>
+        // Data block for Visual Timeline Tracker
+        const timelineSteps = [
+            { title: "01. Pre-Construction & Architectural Underwriting", desc: "Zoning review, code compliance audits, geotechnical surveying, contract execution, structural blueprint engineering, and material supply chain deployment modeling." },
+            { title: "02. Site Grading & Substructure Foundations", desc: "Mass excavation, dirt layout grading, structural utility placement routing, reinforced steel rebar cage setting, and high-strength volumetric concrete pouring." },
+            { title: "03. Structural Skeleton Framing & Core Shelling", desc: "Erection of structural structural columns, load-bearing metal studs, floor decks, concrete floor treatments, roof structure framing, and weatherproofing skins." },
+            { title: "04. Rough MEP Systems & Interior Enclosures", desc: "High-voltage electrical grid routing, industrial plumbing layouts, commercial HVAC infrastructure integration, framing interior insulation layers, and structural dry-walling." },
+            { title: "05. Finished Handover & Commissioning Certification", desc: "Architectural paint work, structural fixture detailing, systems load safety stress-testing, city safety occupancy sign-off protocols, and punch list absolute resolution." }
+        ];
+
+        let selectedBuildType = 'residential';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. GSAP ScrollTriggers ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    nav.classList.remove('py-6');
+                    nav.classList.add('py-4', 'shadow-sm');
+                } else {
+                    nav.classList.remove('py-4', 'shadow-sm');
+                    nav.classList.add('py-6');
+                }
+            });
+
+            gsap.fromTo('.gs-hero > *', 
+                { y: 35, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.1, stagger: 0.15, ease: "power3.out" }
+            );
+
+            gsap.utils.toArray('.gs-reveal').forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 }, 
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 0.9, 
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            gsap.utils.toArray('.gs-stagger').forEach(grid => {
+                const children = grid.children;
+                if(children.length > 0) {
+                    gsap.fromTo(children,
+                        { y: 30, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: grid,
+                                start: "top 80%"
+                            }
+                        }
+                    );
+                }
+            });
+
+            // Initialize Controls
+            setTimelineStep(0);
+            calculateBuildCost();
+
+            // Bind Slider Events
+            const slider = document.getElementById('sqft-slider');
+            const tierSelect = document.getElementById('finishing-tier');
+            
+            slider.addEventListener('input', (e) => {
+                document.getElementById('sqft-label').innerText = parseInt(e.target.value).toLocaleString();
+                calculateBuildCost();
+            });
+            tierSelect.addEventListener('change', calculateBuildCost);
+        });
+
+        // --- 2. Interactive Timeline Logic ---
+        function setTimelineStep(index) {
+            const progressLine = document.getElementById('timeline-progress');
+            const contentBox = document.getElementById('timeline-content');
+            const dots = document.querySelectorAll('.timeline-dot');
+
+            // Calculate percentage width mapping
+            const targetWidth = (index / (dots.length - 1)) * 100;
+            progressLine.style.width = `${targetWidth}%`;
+
+            // Style state management mapping
+            dots.forEach((dot, idx) => {
+                if (idx <= index) {
+                    dot.classList.add('bg-steel-900', 'border-steel-amber', 'text-white');
+                    dot.classList.remove('bg-white', 'border-slate-300', 'text-slate-400');
+                } else {
+                    dot.classList.remove('bg-steel-900', 'border-steel-amber', 'text-white');
+                    dot.classList.add('bg-white', 'border-slate-300', 'text-slate-400');
+                }
+            });
+
+            // Update container content
+            contentBox.innerHTML = `
+                <h4 class="font-display font-bold uppercase tracking-tight text-xl text-steel-900 mb-2">${timelineSteps[index].title}</h4>
+                <p class="text-sm text-slate-600 leading-relaxed">${timelineSteps[index].desc}</p>
+            `;
+        }
+
+        // --- 3. Cost Estimator Logic ---
+        function setBuildType(type) {
+            selectedBuildType = type;
+            const btnRes = document.getElementById('btn-residential');
+            const btnCom = document.getElementById('btn-commercial');
+
+            if(type === 'residential') {
+                btnRes.className = "py-4 border-2 border-steel-amber bg-steel-amber/10 text-white font-display text-xs font-bold tracking-widest uppercase transition-all";
+                btnCom.className = "py-4 border-2 border-steel-700 hover:border-slate-400 text-slate-400 hover:text-white font-display text-xs font-bold tracking-widest uppercase transition-all";
+            } else {
+                btnCom.className = "py-4 border-2 border-steel-amber bg-steel-amber/10 text-white font-display text-xs font-bold tracking-widest uppercase transition-all";
+                btnRes.className = "py-4 border-2 border-steel-700 hover:border-slate-400 text-slate-400 hover:text-white font-display text-xs font-bold tracking-widest uppercase transition-all";
+            }
+            calculateBuildCost();
+        }
+
+        function calculateBuildCost() {
+            const sqftValue = parseFloat(document.getElementById('sqft-slider').value);
+            const tierMultiplier = parseFloat(document.getElementById('finishing-tier').value);
+            
+            const costLowBox = document.getElementById('cost-low');
+            const costHighBox = document.getElementById('cost-high');
+
+            // Baseline Cost Formulas per Sq Ft
+            const baseCostPerSqft = (selectedBuildType === 'residential') ? 165 : 285;
+
+            // Generate ranges
+            const baseEstimatedTotal = sqftValue * baseCostPerSqft * tierMultiplier;
+            const lowRangeTarget = baseEstimatedTotal * 0.92;
+            const highRangeTarget = baseEstimatedTotal * 1.08;
+
+            // Extract current visible numeric states to support GSAP fractional increment effects
+            const currentLow = parseFloat(costLowBox.innerText.replace(/[^0-9.]/g, '')) || 0;
+            const currentHigh = parseFloat(costHighBox.innerText.replace(/[^0-9.]/g, '')) || 0;
+
+            gsap.to({ valLow: currentLow, valHigh: currentHigh }, {
+                valLow: lowRangeTarget,
+                valHigh: highRangeTarget,
+                duration: 0.4,
+                ease: "power1.out",
+                onUpdate: function() {
+                    costLowBox.innerText = new Intl.NumberFormat('en-US', {
+                        style: 'currency', currency: 'USD', maximumFractionDigits: 0
+                    }).format(this.targets()[0].valLow);
+
+                    costHighBox.innerText = new Intl.NumberFormat('en-US', {
+                        style: 'currency', currency: 'USD', maximumFractionDigits: 0
+                    }).format(this.targets()[0].valHigh);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%%SITE_TITLE%%</title>
+    
+    <!-- Fonts: Jost for avant-garde, geometric headings and Inter for crisp details -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Jost', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0A0A0A',      // Stark Black
+                            white: '#FFFFFF',      // Pure White
+                            gray: '#F3F4F6',       // Light background for contrast blocks
+                            stone: '#E5E7EB'       // Borders
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Tweaks -->
+    <style>
+        body {
+            background-color: #FFFFFF;
+            color: #0A0A0A;
+            overflow-x: hidden;
+        }
+
+        /* Hide scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFFFF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0A0A0A;
+        }
+
+        /* Infinite Marquee */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            display: flex;
+        }
+        .marquee-content {
+            display: flex;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Image hover zoom utility for React injected cards */
+        .img-hover-zoom {
+            overflow: hidden;
+        }
+        .img-hover-zoom img {
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .img-hover-zoom:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-black selection:text-brand-white">
+
+    <!-- Minimalist Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 py-5 px-6 lg:px-12 flex justify-between items-center transition-all duration-300 bg-transparent">
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide uppercase">
+            <a href="#shop" class="hover:opacity-50 transition-opacity">Shop</a>
+            <a href="#guide" class="hover:opacity-50 transition-opacity">Ordering</a>
+            <a href="#story" class="hover:opacity-50 transition-opacity">Archive</a>
+        </div>
+        
+        <div class="text-3xl font-display font-bold tracking-tighter uppercase absolute left-1/2 -translate-x-1/2">
+            %%SITE_TITLE%%
+        </div>
+
+        <div class="flex items-center gap-6">
+            <a href="#contact" class="hidden md:block text-sm font-medium tracking-wide uppercase hover:opacity-50 transition-opacity">Support</a>
+            <button class="flex items-center gap-2 hover:opacity-50 transition-opacity">
+                <span class="text-sm font-medium tracking-wide uppercase">Cart</span>
+                <span class="w-5 h-5 rounded-full bg-brand-black text-brand-white text-[10px] flex items-center justify-center font-bold">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Editorial Hero Section -->
+    <header class="relative h-screen flex flex-col justify-end pb-12 pt-24 px-6 lg:px-12">
+        <div class="absolute inset-0 -z-10">
+            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80" alt="Fashion Editorial" class="w-full h-full object-cover">
+            <!-- Subtle gradient overlay for text readability if needed -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40"></div>
+        </div>
+        
+        <div class="max-w-4xl text-brand-white gs-hero">
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-display font-bold leading-[0.9] tracking-tighter uppercase mb-6">
+                Define <br> Your Core.
+            </h1>
+            <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center mt-10">
+                <a href="#shop" class="px-10 py-4 bg-brand-white text-brand-black text-sm font-bold uppercase tracking-widest hover:bg-brand-black hover:text-brand-white transition-colors duration-300">
+                    View Collection
+                </a>
+                <p class="text-sm md:text-base font-medium max-w-sm">
+                    The new season arrives with uncompromising silhouettes and premium structural fabrics.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Scrolling Marquee Banner -->
+    <div class="bg-brand-black text-brand-white py-4 border-y border-brand-black marquee-container">
+        <div class="marquee-content text-sm font-display tracking-[0.2em] uppercase whitespace-nowrap">
+            <span class="mx-8">Free Worldwide Shipping on Orders Over $200</span> • 
+            <span class="mx-8">New Core Collection Out Now</span> • 
+            <span class="mx-8">Limited Edition Pieces</span> • 
+            <span class="mx-8">Free Worldwide Shipping on Orders Over $200</span> • 
+            <span class="mx-8">New Core Collection Out Now</span> • 
+            <span class="mx-8">Limited Edition Pieces</span> •
+            <span class="mx-8">Free Worldwide Shipping on Orders Over $200</span> • 
+            <span class="mx-8">New Core Collection Out Now</span> • 
+            <span class="mx-8">Limited Edition Pieces</span>
+        </div>
+    </div>
+
+    <!-- Featured Listings (The Shop) -->
+    <section id="shop" class="py-24 lg:py-32">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gs-reveal">
+                <div>
+                    <h2 class="text-4xl md:text-6xl font-display font-bold tracking-tighter uppercase mb-4">Latest Arrivals</h2>
+                    <p class="text-gray-500 font-medium">Curated garments for the modern uniform.</p>
+                </div>
+                <a href="#" class="hidden md:inline-block border-b-2 border-brand-black pb-1 text-sm font-bold uppercase tracking-widest hover:text-gray-500 hover:border-gray-500 transition-colors">
+                    Shop All
+                </a>
+            </div>
+            
+            <!-- React Injected Product Grid -->
+            <!-- Note for React: Products should ideally use aspect-[3/4] images -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 gs-stagger">
+                %%FEATURED_LISTINGS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Ordering Guide / Step-by-Step -->
+    <section id="guide" class="py-24 bg-brand-gray">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="max-w-3xl mx-auto text-center mb-16 gs-reveal">
+                <h2 class="text-3xl md:text-5xl font-display font-bold tracking-tighter uppercase mb-6">How to Acquire</h2>
+                <p class="text-gray-600">Our pieces are created in limited runs. Follow these steps to ensure a seamless ordering and delivery process.</p>
+            </div>
+            
+            <!-- React Injected Order Guide -->
+            <!-- Expected to be a flex or grid layout showing steps -->
+            <div class="gs-reveal">
+                %%ORDER_GUIDE%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story / About -->
+    <section id="story" class="py-24 lg:py-32 overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <div class="gs-reveal order-2 lg:order-1">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6">The Archive</h2>
+                    <h3 class="text-3xl md:text-5xl font-display font-bold tracking-tighter uppercase mb-8 leading-tight">
+                        Form, Function, <br> & Fabrication.
+                    </h3>
+                    <div class="prose prose-lg text-gray-600">
+                        %%COMPANY_DETAILS%%
+                    </div>
+                </div>
+                <div class="relative h-[600px] w-full bg-brand-gray order-1 lg:order-2 gs-reveal img-hover-zoom">
+                    <img src="https://images.unsplash.com/photo-1550614000-4b95d466f505?auto=format&fit=crop&q=80" alt="Brand Aesthetics" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="py-24 border-t border-brand-stone">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 gs-reveal">
+                <h2 class="text-3xl font-display font-bold tracking-tighter uppercase mb-4">Client Testimonials</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 gs-stagger">
+                %%REVIEWS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Support / Contact Form -->
+    <section id="contact" class="py-24 bg-brand-black text-brand-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-16 gs-reveal">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-display font-bold tracking-tighter uppercase mb-6">Client Services</h2>
+                    <p class="text-gray-400 mb-8">For inquiries regarding styling, fit, or the status of your order, please reach out. Our concierge team is available.</p>
+                    
+                    <div class="space-y-4 text-sm font-medium tracking-wide uppercase text-gray-400">
+                        <p>Mon - Fri, 9AM - 6PM EST</p>
+                        <p>Returns & Exchanges Info</p>
+                        <p>Size Guide</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <form action="mailto:%%CONTACT_EMAIL%%" method="POST" enctype="text/plain" class="space-y-6">
+                        <div>
+                            <input type="text" name="Name" required placeholder="Name" class="w-full bg-transparent border-b border-gray-700 py-4 text-brand-white placeholder-gray-500 focus:outline-none focus:border-brand-white transition-colors rounded-none">
+                        </div>
+                        <div>
+                            <input type="email" name="Email" required placeholder="Email Address" class="w-full bg-transparent border-b border-gray-700 py-4 text-brand-white placeholder-gray-500 focus:outline-none focus:border-brand-white transition-colors rounded-none">
+                        </div>
+                        <div>
+                            <input type="text" name="Order_Number" placeholder="Order Number (Optional)" class="w-full bg-transparent border-b border-gray-700 py-4 text-brand-white placeholder-gray-500 focus:outline-none focus:border-brand-white transition-colors rounded-none">
+                        </div>
+                        <div>
+                            <textarea name="Message" required rows="3" placeholder="How can we assist you?" class="w-full bg-transparent border-b border-gray-700 py-4 text-brand-white placeholder-gray-500 focus:outline-none focus:border-brand-white transition-colors resize-none rounded-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-brand-white text-brand-black font-bold uppercase tracking-widest text-sm hover:bg-gray-300 transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black border-t border-gray-800 py-10 text-brand-white">
+        <div class="container mx-auto px-6 text-center text-gray-500 text-xs tracking-widest uppercase">
+            %%FOOTER%%
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Dynamic Navbar - changes background from transparent to solid white on scroll
+            const nav = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('bg-brand-white/95', 'backdrop-blur-sm', 'border-b', 'border-brand-stone');
+                    nav.classList.remove('bg-transparent', 'py-5');
+                    nav.classList.add('py-4');
+                } else {
+                    nav.classList.add('bg-transparent', 'py-5');
+                    nav.classList.remove('bg-brand-white/95', 'backdrop-blur-sm', 'border-b', 'border-brand-stone', 'py-4');
+                }
+            });
+
+            // Hero Animation
+            gsap.fromTo('.gs-hero', 
+                { y: 50, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.5, ease: "power4.out", delay: 0.2 }
+            );
+
+            // General Reveals
+            gsap.utils.toArray('.gs-reveal').forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 50, opacity: 0 }, 
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 1.2, 
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            // Staggered reveals for product grids and reviews
+            gsap.utils.toArray('.gs-stagger').forEach(grid => {
+                const children = grid.children;
+                if(children.length > 0) {
+                    gsap.fromTo(children,
+                        { y: 40, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 1,
+                            stagger: 0.15,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: grid,
+                                start: "top 80%"
+                            }
+                        }
+                    );
+                }
+            });
+        });
+    </script>
+</body>
+</html>

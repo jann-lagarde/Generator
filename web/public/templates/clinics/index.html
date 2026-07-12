@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>%%SITE_TITLE%%</title>
+    
+    <!-- Fonts: Outfit for friendly, modern headings and Inter for clinical legibility -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        clinic: {
+                            primary: '#0D9488',    // Calming Teal
+                            primaryLight: '#CCFBF1', // Soft Mint
+                            bg: '#F8FAFC',         // Pristine Slate 50
+                            surface: '#FFFFFF',    // Pure White
+                            text: '#0F172A',       // Slate 900
+                            muted: '#64748B'       // Slate 500
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Tweaks -->
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #0F172A;
+            overflow-x: hidden;
+        }
+        
+        /* Smooth image wrapper for parallax */
+        .parallax-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+        .parallax-img {
+            transform: scale(1.15);
+            height: 120%;
+            width: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: -10%;
+        }
+
+        /* Clinic map container styling for React iframe injection */
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: grayscale(20%) contrast(95%);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-clinic-primary selection:text-white">
+
+    <!-- Sticky Glass Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 py-4 px-6 lg:px-12 flex justify-between items-center transition-all duration-300 bg-white/80 backdrop-blur-lg border-b border-gray-100">
+        <div class="text-2xl font-display font-bold tracking-tight text-clinic-primary">
+            %%SITE_TITLE%%
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-clinic-muted">
+            <a href="#booking" class="hover:text-clinic-primary transition-colors">Book Visit</a>
+            <a href="#services" class="hover:text-clinic-primary transition-colors">Treatments</a>
+            <a href="#about" class="hover:text-clinic-primary transition-colors">Our Practice</a>
+            <a href="#location" class="hover:text-clinic-primary transition-colors">Location</a>
+        </div>
+        <a href="#booking" class="px-6 py-2.5 bg-clinic-primary text-white text-sm font-semibold rounded-full hover:bg-clinic-text transition-all duration-300 shadow-lg shadow-clinic-primary/30">
+            Patient Portal
+        </a>
+    </nav>
+
+    <!-- Hero Section (Clean & Airy) -->
+    <header class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-clinic-primaryLight rounded-bl-[100px] -z-10 transform translate-x-10 -translate-y-10"></div>
+        
+        <div class="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="max-w-xl gs-hero">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-clinic-primaryLight text-clinic-primary text-xs font-bold uppercase tracking-wide mb-6">
+                    <span class="w-2 h-2 rounded-full bg-clinic-primary animate-pulse"></span>
+                    Accepting New Patients
+                </div>
+                <h1 class="text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 text-clinic-text">
+                    Modern Care. <br>
+                    <span class="text-clinic-primary">Exceptional Results.</span>
+                </h1>
+                <p class="text-lg text-clinic-muted mb-8 leading-relaxed">
+                    Experience a new standard of healthcare. We combine advanced medical technology with a compassionate, patient-first approach to wellness.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#services" class="px-8 py-3.5 bg-white border border-gray-200 text-clinic-text rounded-full font-semibold hover:border-clinic-primary hover:text-clinic-primary transition-colors">
+                        Explore Treatments
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="relative h-[500px] w-full rounded-3xl overflow-hidden gs-hero shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80" alt="Modern Clinic" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION REORDER: Immediate Booking Funnel -->
+    <!-- We place this high up so users don't have to scroll to the bottom to take action -->
+    <section id="booking" class="py-12 relative z-20 -mt-10">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="bg-white rounded-3xl p-8 lg:p-12 shadow-soft border border-gray-100 gs-reveal">
+                <div class="grid lg:grid-cols-3 gap-10 items-center">
+                    <div class="lg:col-span-1">
+                        <h2 class="text-3xl font-display font-bold mb-3">Request a Consultation</h2>
+                        <p class="text-clinic-muted text-sm">Our patient coordinators will contact you within 24 hours to confirm your appointment time.</p>
+                    </div>
+                    
+                    <div class="lg:col-span-2">
+                        <form action="mailto:%%CONTACT_EMAIL%%" method="POST" enctype="text/plain" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" name="Name" required placeholder="Full Name" class="w-full bg-clinic-bg border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-clinic-primary transition-colors">
+                            <input type="tel" name="Phone" required placeholder="Phone Number" class="w-full bg-clinic-bg border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-clinic-primary transition-colors">
+                            
+                            <!-- Clinic Specific Prequalifier -->
+                            <select name="Patient_Status" required class="w-full bg-clinic-bg border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-clinic-primary transition-colors cursor-pointer text-clinic-muted">
+                                <option value="" disabled selected>Patient Status...</option>
+                                <option value="New Patient">New Patient</option>
+                                <option value="Returning Patient">Returning Patient</option>
+                            </select>
+
+                            <select name="Reason" required class="w-full bg-clinic-bg border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-clinic-primary transition-colors cursor-pointer text-clinic-muted">
+                                <option value="" disabled selected>Reason for Visit...</option>
+                                <option value="General Consultation">General Consultation</option>
+                                <option value="Specific Treatment">Specific Treatment</option>
+                                <option value="Follow-up">Follow-up</option>
+                            </select>
+                            
+                            <div class="md:col-span-2">
+                                <button type="submit" class="w-full py-4 bg-clinic-text text-white rounded-xl font-bold hover:bg-clinic-primary transition-colors duration-300">
+                                    Request Appointment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Treatments Section -->
+    <section id="services" class="py-24">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 gs-reveal">
+                <h2 class="text-sm font-bold tracking-widest text-clinic-primary uppercase mb-3">Expert Care</h2>
+                <h3 class="text-4xl font-display font-bold">Specialized Treatments</h3>
+            </div>
+            
+            <!-- React Injected Grid of Services -->
+            <!-- Expecting cards with images/icons and descriptions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gs-stagger">
+                %%SERVICES%%
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Philosophy Section (Parallax Split) -->
+    <section id="about" class="py-24 bg-white border-y border-gray-100 overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="parallax-wrapper h-[600px] rounded-3xl gs-reveal order-2 lg:order-1">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80" alt="Doctor and Patient" class="parallax-img">
+                </div>
+                
+                <div class="gs-reveal order-1 lg:order-2">
+                    <h2 class="text-sm font-bold tracking-widest text-clinic-primary uppercase mb-3">Our Philosophy</h2>
+                    <h3 class="text-3xl lg:text-4xl font-display font-bold mb-6">Rooted in science. Delivered with empathy.</h3>
+                    <div class="prose prose-lg text-clinic-muted">
+                        %%COMPANY_DETAILS%%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patient Reviews -->
+    <section class="py-24 bg-clinic-primaryLight/30">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 gs-reveal">
+                <h2 class="text-3xl font-display font-bold mb-4">Patient Stories</h2>
+                <p class="text-clinic-muted">Don't just take our word for it.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 gs-stagger">
+                %%REVIEWS%%
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Map Section -->
+    <section id="location" class="py-24 bg-clinic-text text-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="gs-reveal">
+                    <h2 class="text-4xl font-display font-bold mb-6">Visit Our Clinic</h2>
+                    <p class="text-gray-400 mb-8 max-w-md">Conveniently located with dedicated patient parking. Step into a calming environment designed for your comfort.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-clinic-primaryLight" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Address</h4>
+                                <p class="text-gray-400 text-sm mt-1">123 Wellness Avenue, Medical District<br>Suite 400</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5 text-clinic-primaryLight" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Hours</h4>
+                                <p class="text-gray-400 text-sm mt-1">Mon-Fri: 8:00 AM - 6:00 PM<br>Sat: 9:00 AM - 2:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- React Injected Embedded Map -->
+                <div class="h-[400px] lg:h-[500px] rounded-3xl overflow-hidden map-container gs-reveal bg-gray-800">
+                    %%MAP_EMBED%%
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-clinic-text border-t border-white/10 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-500 text-sm">
+            %%FOOTER%%
+        </div>
+    </footer>
+
+    <!-- GSAP Animations & Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Hero Entrance
+            gsap.fromTo('.gs-hero', 
+                { y: 40, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: "power3.out" }
+            );
+
+            // 2. Standard Reveals
+            gsap.utils.toArray('.gs-reveal').forEach(elem => {
+                gsap.fromTo(elem, 
+                    { y: 40, opacity: 0 }, 
+                    {
+                        y: 0, 
+                        opacity: 1, 
+                        duration: 1, 
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            // 3. Staggered Grids (Services & Reviews)
+            gsap.utils.toArray('.gs-stagger').forEach(grid => {
+                const children = grid.children;
+                if(children.length > 0) {
+                    gsap.fromTo(children,
+                        { y: 30, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            stagger: 0.15,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: grid,
+                                start: "top 80%"
+                            }
+                        }
+                    );
+                }
+            });
+
+            // 4. Smooth Parallax on About Image
+            gsap.to('.parallax-img', {
+                yPercent: 20, // Moves the image down slightly as you scroll down
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".parallax-wrapper",
+                    start: "top bottom", 
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>
